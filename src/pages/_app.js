@@ -7,6 +7,7 @@ import withRedux from "next-redux-wrapper";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from "redux-thunk";
 import {storeReducer} from '../store/Store';
+import networkMiddleware from '../store/middleware/NetworkMiddleware';
 
 /**
 * @param {object} initialState
@@ -18,7 +19,7 @@ import {storeReducer} from '../store/Store';
 */
 const makeStore = (initialState, options) => {
     const composeEnhancers = composeWithDevTools({name: 'shokz.tv admin'});
-    return createStore(storeReducer, composeEnhancers(applyMiddleware(thunk)));
+    return createStore(storeReducer, composeEnhancers(applyMiddleware(thunk, networkMiddleware)));
 };
 
 class MyApp extends App {
