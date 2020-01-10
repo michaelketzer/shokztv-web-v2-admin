@@ -2,9 +2,8 @@ import React, { ReactElement, useEffect } from 'react'
 import { NextPageContext } from 'next';
 import { Spin } from 'antd';
 import 'antd/dist/antd.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { authUser, loadCurrentUser } from '../store/Ui';
-import { State } from '../store/Store';
+import { useDispatch } from 'react-redux';
+import { authUser } from '../store/Ui';
 
 interface Props {
     code: string;
@@ -12,17 +11,10 @@ interface Props {
 
 const Auth = ({ code }: Props): ReactElement => {
   const dispatch = useDispatch();
-  const jwt = useSelector((state: State) => state.ui.currentUser.jwt);
 
   useEffect(() => {
     dispatch(authUser(code));
   }, []);
-
-  useEffect(() => {
-    if(jwt) {
-      dispatch(loadCurrentUser());
-    }
-  }, [jwt])
   
   return <div className={'loadingPage'}>
     <Spin size={'large'} />
