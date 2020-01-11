@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from 'react'
 import { Spin } from 'antd';
-import 'antd/dist/antd.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadCurrentUser } from '../store/Ui';
 import { Dispatch } from '../store/middleware/NetworkMiddlewareTypes';

@@ -7,7 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from "redux-thunk";
 import {storeReducer} from '../store/Store';
 import networkMiddleware from '../store/middleware/NetworkMiddleware';
-import { loadCurrentUser } from "../store/Ui";
+import 'antd/dist/antd.css';
 
 const makeStore = () => {
     const composeEnhancers = composeWithDevTools({name: 'shokz.tv admin'});
