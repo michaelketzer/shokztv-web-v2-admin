@@ -28,10 +28,10 @@ const initial: Ui = {
 //#region <reducer>
 const {addReducer, combinedReducer} = createReducer<Ui>(initial);
 addReducer<UiSet>(SET_UI, (state, action) => mergeStates(state, action.ui));
-addReducer<CurrentUserSuccess>(LOAD_CURRENT_USER_SUCCESS, (state, {response: {data}}) => {
+addReducer<CurrentUserSuccess>(LOAD_CURRENT_USER_SUCCESS, (state, {response: currentUser}) => {
     return {
         ...state,
-        currentUser: data ? data : null
+        currentUser,
     };
 });
 
@@ -39,10 +39,10 @@ addReducer<CurrentUserSuccess>(LOAD_CURRENT_USER_SUCCESS, (state, {response: {da
 
 export const uiReducer = combinedReducer;
 
-export function loadCurrentUser(): ActionDispatcher<Promise<Response>> {
+export function loadCurrentUser(): ActionDispatcher<Promise<void>> {
     return async (dispatch, getState) => {
         if(!getState().ui.currentUser) {
-            return await dispatch({
+            const response = await dispatch<Response>({
                 [CALL_API]: {
                     endpoint: 'http://localhost/auth/user',
                     types: {
@@ -52,6 +52,10 @@ export function loadCurrentUser(): ActionDispatcher<Promise<Response>> {
                     },
                 },
             });
+
+            if(!response) {
+                location.href = 'http://localhost/auth/twitch';
+            }
         }
     }
 }
@@ -59,7 +63,7 @@ export function loadCurrentUser(): ActionDispatcher<Promise<Response>> {
 export function authUser(code: string) {
     return async (dispatch, getState) => {
         if(!getState().ui.currentUser) {
-            const response = await dispatch({
+            const jwt = await dispatch({
                 [CALL_API]: {
                     endpoint: `http://localhost/auth/twitch/callback?code=${code}`,
                     headers: { 'Content-Type': 'text/html' },
@@ -70,11 +74,10 @@ export function authUser(code: string) {
                     },
                 },
             });
-            if(response.code === 200) {
-                localStorage.setItem('jwt', response.data);
+            if(jwt) {
+                localStorage.setItem('jwt', jwt);
+                await dispatch(loadCurrentUser());
             }
-
-            await dispatch(loadCurrentUser());
         }
     }
 }

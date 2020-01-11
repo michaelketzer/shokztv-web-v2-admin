@@ -1,20 +1,25 @@
 import React, { ReactElement, useEffect } from 'react'
 import { Spin } from 'antd';
 import 'antd/dist/antd.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadCurrentUser } from '../store/Ui';
 import { Dispatch } from '../store/middleware/NetworkMiddlewareTypes';
+import Router from 'next/router';
+import { currentUserSelector } from '../store/selectors/currentuser';
 
 export default function Index(): ReactElement {
   const dispatch = useDispatch<Dispatch>();
-  const loadUser = async () => {
-    const response = await dispatch<Response>(loadCurrentUser());
-    if(response.status === 401) {
-      location.href = 'http://localhost/auth/twitch';
-    }
-  }
+  const currentUser = useSelector(currentUserSelector);
+
   useEffect(() => {
-    loadUser();
+    if(currentUser) {
+      Router.push('/dashboard');
+    }
+  }, [currentUser]);
+  
+
+  useEffect(() => {
+    dispatch(loadCurrentUser());
   }, []);
 
   return <div className={'loadingPage'}>

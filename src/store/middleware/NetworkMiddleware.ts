@@ -43,8 +43,6 @@ function executeFetch<State extends object>(
   const state = store.getState();
   const endPointUrl = typeof endpoint === 'function' ? endpoint(state) : endpoint;
 
-  validateParameter(endPointUrl, requestType, successType, failureType);
-
   const hash = generateRequestHash({
     endPointUrl, headers, method, options, types,
   });
@@ -121,32 +119,7 @@ async function handleErrorResponse(
 
 }
 
-function validateParameter(endpoint: unknown, requestType: unknown, successType: unknown, failureType: unknown): void {
-  if (typeof endpoint !== 'string') {
-    throw new Error('Specify a string endpoint URL.');
-  }
-  if (
-    typeof requestType !== 'string' ||
-    !(typeof successType === 'string' || Array.isArray(successType)) ||
-    typeof failureType !== 'string'
-  ) {
-    throw new Error('Expected action types to be strings.');
-  }
-}
-
 function generateRequestHash(object: object): string {
   // The stringified object has to be encoded because asmCrypto cannot hash unicode values.
   return asmCrypto.SHA256.hex(encodeURI(JSON.stringify(object)));
-}
-
-export function handleResponseStatus(
-  statuses: number[],
-  callback: Function,
-): (res: ServerResponseAction) => ServerResponseAction {
-  return (res) => {
-    if (res && statuses.includes(res.responseStatus)) {
-      return callback(res.response);
-    }
-    return res;
-  };
 }
