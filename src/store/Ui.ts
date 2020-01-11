@@ -6,7 +6,6 @@ import { SET_UI, LOAD_CURRENT_USER_REQUEST, LOAD_CURRENT_USER_SUCCESS, LOAD_CURR
 import { CALL_API, ActionDispatcher } from './middleware/NetworkMiddlewareTypes';
 import { ApiActionResponse } from "./middleware/Network";
 
-//#region <interfaces>
 export interface Ui {
     currentUser: User | null;
 };
@@ -19,13 +18,11 @@ interface UiSet {
 interface CurrentUserSuccess extends ApiActionResponse<User> {
     type: typeof LOAD_CURRENT_USER_SUCCESS;
 }
-//#endregion
 
 const initial: Ui = {
     currentUser: null,
 };
 
-//#region <reducer>
 const {addReducer, combinedReducer} = createReducer<Ui>(initial);
 addReducer<UiSet>(SET_UI, (state, action) => mergeStates(state, action.ui));
 addReducer<CurrentUserSuccess>(LOAD_CURRENT_USER_SUCCESS, (state, {response: currentUser}) => {
@@ -34,8 +31,6 @@ addReducer<CurrentUserSuccess>(LOAD_CURRENT_USER_SUCCESS, (state, {response: cur
         currentUser,
     };
 });
-
-//#endregion
 
 export const uiReducer = combinedReducer;
 

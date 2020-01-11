@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect } from 'react'
 import { NextPageContext } from 'next';
 import { Spin } from 'antd';
-import 'antd/dist/antd.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { authUser } from '../store/Ui';
 import { Dispatch } from '../store/middleware/NetworkMiddlewareTypes';

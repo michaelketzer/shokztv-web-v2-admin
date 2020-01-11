@@ -1,16 +1,22 @@
 import React, { ReactElement } from 'react';
 import PageMenu from './components/PageMenu';
 import Head from 'next/head';
+import RoleList from './rights/RoleList';
 import Layout from 'antd/lib/layout';
-const { Header } = Layout;
+const { Header, Content } = Layout;
 
-export default function Dashboard(): ReactElement {
+export default function Rights(): ReactElement {
   return <Layout className="layout" style={{ height: '100vh' }}>
     <Head>
-      <title>Dashboard</title>
+      <title>Rollen & Rechte</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 
     <Header  style={{ height: '46px' }}><PageMenu /></Header>
+    <Content style={{ padding: '50px' }}>
+      <div>
+        <RoleList />
+      </div>
+    </Content>
   </Layout>;
 }
