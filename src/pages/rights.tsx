@@ -3,6 +3,8 @@ import PageMenu from './components/PageMenu';
 import Head from 'next/head';
 import RoleList from './rights/RoleList';
 import Layout from 'antd/lib/layout';
+import AddRole from './rights/AddRole';
+import { Divider } from 'antd';
 const { Header, Content } = Layout;
 
 export default function Rights(): ReactElement {
@@ -16,6 +18,10 @@ export default function Rights(): ReactElement {
     <Content style={{ padding: '50px' }}>
       <div>
         <RoleList />
+
+        <Divider />
+        
+        <AddRole/>
       </div>
     </Content>
   </Layout>;
