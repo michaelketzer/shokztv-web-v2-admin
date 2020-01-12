@@ -20,24 +20,37 @@ export interface ApiActionEntitiesResponse<T = {}> {
     };
 }
 
+function injectUrlParams(endPointUrl: string, options: RequestOptions): string {
+    let url = endPointUrl;
+    if(options && options.urlParams && Object.keys(options.urlParams).length > 0) {
+        Object.entries(options.urlParams).forEach(([key, value]) => {
+            url = url.replace(`:${key}`, value as string);
+        });
+    }
+    return url;
+}
+
 export async function get(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    return fetch(endPointUrl, {method: 'GET', headers, ...options}).then(handleResponse);
+    return fetch(injectUrlParams(endPointUrl, options), {method: 'GET', headers, ...options}).then(handleResponse);
 }
 
 export async function post(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    return fetch(endPointUrl, {method: 'POST', headers, ...options}).then(handleResponse);
+    const body = options.data ? JSON.stringify(options.data) : '';
+    return fetch(injectUrlParams(endPointUrl, options), {method: 'POST', headers, ...options, body}).then(handleResponse);
 }
 
 export async function patch(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    return fetch(endPointUrl, {method: 'PATCH', headers, ...options}).then(handleResponse);
+    const body = options.data ? JSON.stringify(options.data) : '';
+    return fetch(injectUrlParams(endPointUrl, options), {method: 'PATCH', headers, ...options, body}).then(handleResponse);
 }
 
 export async function del(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    return fetch(endPointUrl, {method: 'DELETE', headers, ...options}).then(handleResponse);
+    return fetch(injectUrlParams(endPointUrl, options), {method: 'DELETE', headers, ...options}).then(handleResponse);
 }
 
 export async function put(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    return fetch(endPointUrl, {method: 'PUT', headers, ...options}).then(handleResponse);
+    const body = options.data ? JSON.stringify(options.data) : '';
+    return fetch(injectUrlParams(endPointUrl, options), {method: 'PUT', headers, ...options, body}).then(handleResponse);
 }
 
 async function handleResponse(response: Response): Promise<Response | object | string> {

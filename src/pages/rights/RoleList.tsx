@@ -16,7 +16,7 @@ export default function RoleList(): ReactElement {
   }, []);
   
   return <Row type="flex" justify="start">
-    {Object.values(roles).map((role) => <Col span={4}>
+    {Object.values(roles).map((role) => <Col span={4} key={role.id}>
       <Card title={role.name}>
         <RoleCardContent role={role} />
       </Card>
