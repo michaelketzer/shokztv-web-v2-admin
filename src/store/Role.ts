@@ -1,7 +1,7 @@
 import { schema } from 'normalizr';
 import { Role } from '../@types/Entities/Role';
 import { LOAD_ROLES_REQUEST, LOAD_ROLES_SUCCESS, LOAD_ROLES_FAILURE, ASSIGN_ROLE_RIGHT_REQUEST, ASSIGN_ROLE_RIGHT_SUCCESS, ASSIGN_ROLE_RIGHT_FAILURE, REMOVE_ROLE_RIGHT_REQUEST, REMOVE_ROLE_RIGHT_SUCCESS, REMOVE_ROLE_RIGHT_FAILURE, ADD_ROLE_REQUEST, ADD_ROLE_SUCCESS, ADD_ROLE_FAILURE } from './Actions';
-import { createReducer } from './Reducer';
+import { createReducer } from './Reducer/Reducer';
 import { ActionDispatcher, CALL_API, ServerResponseAction } from './middleware/NetworkMiddlewareTypes';
 import { right } from './Right';
 
@@ -13,18 +13,7 @@ export interface RoleEntities {
     [x: number]: Role;
 };
 
-export interface LoadRoleSuccess extends ServerResponseAction {
-    type: typeof LOAD_ROLES_SUCCESS;
-}
-
 const {addReducer, combinedReducer} = createReducer<RoleEntities>({});
-
-addReducer<LoadRoleSuccess>(LOAD_ROLES_SUCCESS, (state: RoleEntities, {response: {entities: {role}}}): RoleEntities => {
-    return {
-        ...state, 
-        ...role,
-    };
-});
 
 addReducer<ServerResponseAction>(ASSIGN_ROLE_RIGHT_SUCCESS, (state: RoleEntities, {options: {urlParams}}): RoleEntities => {
     const roleId = urlParams.roleId as number;
@@ -102,7 +91,7 @@ export function addRole(name: string):  ActionDispatcher<Promise<void>> {
 
 export function addRight(roleId: number, rightId: number):  ActionDispatcher<Promise<void>> {
     return async (dispatch, getState) => {
-        const role = getState().role[roleId];
+        const role = getState().entities.role[roleId];
         if(!role.rights.includes(rightId)) {
             dispatch<Response>({
                 [CALL_API]: {
@@ -127,7 +116,7 @@ export function addRight(roleId: number, rightId: number):  ActionDispatcher<Pro
 
 export function removeRight(roleId: number, rightId: number):  ActionDispatcher<Promise<void>> {
     return async (dispatch, getState) => {
-        const role = getState().role[roleId];
+        const role = getState().entities.role[roleId];
         if(role.rights.includes(rightId)) {
             dispatch<Response>({
                 [CALL_API]: {

@@ -10,6 +10,7 @@
     "@types/normalizr": "^2.0.18",
     "antd": "^3.26.6",
     "asmcrypto-lite": "^1.1.0",
+    "is-plain-object": "^3.0.0",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "next": "^9.1.7",
