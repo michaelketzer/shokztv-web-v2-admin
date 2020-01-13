@@ -11,6 +11,10 @@ const pages = [{
     icon: 'lock',
     name: 'Rollen & Rechte',
     path: '/rights'
+}, {
+    icon: 'tags',
+    name: 'Tags',
+    path: '/tags'
 }];
 
 export default function PageMenu(): ReactElement {
