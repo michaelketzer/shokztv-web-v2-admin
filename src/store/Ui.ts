@@ -1,5 +1,5 @@
 import { User } from "../@types/Entities/User";
-import { createReducer } from "./Reducer";
+import { createReducer } from "./Reducer/Reducer";
 import { DeepPartial } from "../@types/Generic";
 import {mergeStates} from '../utils/MergeStates';
 import { SET_UI, LOAD_CURRENT_USER_REQUEST, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, AUTH_USER_REQUEST, AUTH_USER_SUCCESS, AUTH_USER_FAILURE } from "./Actions";
