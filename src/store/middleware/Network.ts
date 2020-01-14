@@ -1,11 +1,11 @@
 import { RequestOptions } from "./NetworkMiddlewareTypes";
 
-export function getDefaultHeader(): Headers {
+export function getDefaultHeader(): object {
     const jwt = localStorage.getItem('jwt');
-    return new Headers({
+    return {
         'Content-Type': 'application/json',
         ...(jwt ? {'Authorization': `JWT ${jwt}`} : {})
-    });
+    };
 }
 
 export interface ApiActionResponse<T = {}> {
@@ -30,17 +30,29 @@ function injectUrlParams(endPointUrl: string, options: RequestOptions): string {
     return url;
 }
 
+function getBody(data: object | FormData | undefined, headers: object): string | FormData | undefined {
+    if(data) {
+        const isJson = headers['Content-Type'] === 'application/json';
+
+        if(isJson) {
+            return JSON.stringify(data);
+        }
+
+        return data as FormData;
+    }
+}
+
 export async function get(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
     return fetch(injectUrlParams(endPointUrl, options), {method: 'GET', headers, ...options}).then(handleResponse);
 }
 
 export async function post(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    const body = options.data ? JSON.stringify(options.data) : '';
+    const body = getBody(options.data, headers);
     return fetch(injectUrlParams(endPointUrl, options), {method: 'POST', headers, ...options, body}).then(handleResponse);
 }
 
 export async function patch(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    const body = options.data ? JSON.stringify(options.data) : '';
+    const body = getBody(options.data, headers);
     return fetch(injectUrlParams(endPointUrl, options), {method: 'PATCH', headers, ...options, body}).then(handleResponse);
 }
 
@@ -49,7 +61,7 @@ export async function del(endPointUrl: string, options: RequestOptions, headers:
 }
 
 export async function put(endPointUrl: string, options: RequestOptions, headers: { [key: string]: string; } | Headers): Promise<Response | object | string> {
-    const body = options.data ? JSON.stringify(options.data) : '';
+    const body = getBody(options.data, headers);
     return fetch(injectUrlParams(endPointUrl, options), {method: 'PUT', headers, ...options, body}).then(handleResponse);
 }
 

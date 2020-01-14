@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Layout from 'antd/lib/layout';
 import { useDispatch } from 'react-redux';
 import { loadTags } from '../store/Tag';
+import AddTag from './tags/AddTag';
 const { Header, Content } = Layout;
 
 export default function Tags(): ReactElement {
@@ -20,6 +21,7 @@ export default function Tags(): ReactElement {
         <Header  style={{ height: '46px' }}><PageMenu /></Header>
         <Content style={{ padding: '50px' }}>
             <div>
+                <AddTag />
             </div>
         </Content>
     </Layout>;
