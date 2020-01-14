@@ -68,7 +68,7 @@ function executeFetch<State extends object>(
   }
 
   next(actionWith({networkType: NETWORK_REQUEST, type: requestType}));
-  const request = Network[method](endPointUrl, options, headers).then((response) => {
+  const request = Network[method](endPointUrl, options, headers as Headers).then((response) => {
     activeRequest.delete(hash);
     const normalizedResponse = schema ? normalize(response, schema) : response;
     next(actionWith({networkType: NETWORK_SUCCESS, response: normalizedResponse, type: successType}));

@@ -3,6 +3,7 @@ import { LOAD_TAGS_REQUEST, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAILURE, ADD_TAG_REQUES
 import { createReducer } from './Reducer/Reducer';
 import { ActionDispatcher, CALL_API } from './middleware/NetworkMiddlewareTypes';
 import { Tag } from '../@types/Entities/Tag';
+import { getDefaultHeader } from './middleware/Network';
 
 export const tag = new schema.Entity('tag');
 
@@ -35,6 +36,7 @@ export function loadTags(): ActionDispatcher<Promise<void>> {
 export function createTag(name: string, file?: File): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
+        console.log(name, file);
         data.set('name', name);
         file && data.set('image', file);
         
@@ -42,6 +44,9 @@ export function createTag(name: string, file?: File): ActionDispatcher<Promise<v
             [CALL_API]: {
                 endpoint: 'http://localhost/tag/create',
                 method: 'post',
+                headers: {
+                    ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
+                },
                 types: {
                     requestType: ADD_TAG_REQUEST,
                     successType: ADD_TAG_SUCCESS,
