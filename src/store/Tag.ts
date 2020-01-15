@@ -40,7 +40,7 @@ export function createTag(name: string, file?: File): ActionDispatcher<Promise<v
         data.set('name', name);
         file && data.set('image', file);
         
-        dispatch<Response>({
+        await dispatch<Response>({
             [CALL_API]: {
                 endpoint: 'http://localhost/tag/create',
                 method: 'post',
@@ -57,6 +57,8 @@ export function createTag(name: string, file?: File): ActionDispatcher<Promise<v
                 },
             },
         });
+
+        await dispatch(loadTags());
     }
 }
 

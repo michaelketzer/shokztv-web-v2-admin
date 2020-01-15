@@ -15,6 +15,10 @@ const pages = [{
     icon: 'tags',
     name: 'Tags',
     path: '/tags'
+}, {
+    icon: 'file-text',
+    name: 'Articles',
+    path: '/articles'
 }];
 
 export default function PageMenu(): ReactElement {
