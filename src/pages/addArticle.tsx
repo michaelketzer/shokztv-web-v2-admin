@@ -2,24 +2,22 @@ import React, { ReactElement, useEffect } from 'react';
 import PageMenu from './components/PageMenu';
 import Head from 'next/head';
 import Layout from 'antd/lib/layout';
-import AddTag from './tags/AddTag';
-import TagList from './tags/TagList';
-import { Divider } from 'antd';
+import Link from 'next/link';
+import { Icon, Button } from 'antd';
+import AddArticleForm from './addArticle/AddArticleForm';
 const { Header, Content } = Layout;
 
-export default function Tags(): ReactElement {
+export default function AddArticle(): ReactElement {
     return <Layout className="layout" style={{ height: '100vh' }}>
         <Head>
-            <title>Tags</title>
+            <title>New article</title>
             <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
 
         <Header  style={{ height: '46px' }}><PageMenu /></Header>
         <Content style={{ padding: '50px' }}>
             <div>
-                <TagList />
-                <Divider />
-                <AddTag />
+                <AddArticleForm />
             </div>
         </Content>
     </Layout>;
