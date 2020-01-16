@@ -2,8 +2,6 @@ import React, { ReactElement, useEffect } from 'react';
 import PageMenu from './components/PageMenu';
 import Head from 'next/head';
 import Layout from 'antd/lib/layout';
-import Link from 'next/link';
-import { Icon, Button } from 'antd';
 import AddArticleForm from './addArticle/AddArticleForm';
 const { Header, Content } = Layout;
 

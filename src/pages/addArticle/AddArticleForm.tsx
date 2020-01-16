@@ -1,9 +1,11 @@
-import React, { ReactElement, useState, useMemo } from 'react';
-import { Form, Input, Icon, Tag, AutoComplete } from 'antd';
+import React, { ReactElement, useState, useMemo, useEffect } from 'react';
+import { Form, Input, Icon, Tag, AutoComplete, Button } from 'antd';
 const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
 import 'react-quill/dist/quill.snow.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../../store/selectors/tag';
+import { createArticle } from '../../store/Article';
+import { loadTags } from '../../store/Tag';
 
 const formItemLayout = {
     labelCol: {
@@ -16,16 +18,33 @@ const formItemLayout = {
     },
 };
 
+const tailFormItemLayout = {
+    wrapperCol: {
+      xs: {
+        span: 24,
+        offset: 4,
+      },
+      sm: {
+        span: 24,
+        offset: 4,
+      },
+    },
+};
+
 export default function AddArticleForm(): ReactElement {
+    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [tags, setTags] = useState<string[]>([]);
     const [image, setImage] = useState<File | null>(null);
-    const [loading, setLoading] = useState(false);
     const [tagInput, setTagInput] = useState(false);
     const [newTagInput, setNewTagInput] = useState('');
     const availableTags = useSelector(tagsSelector);
     const autoCompleteTags = useMemo(() => [...(new Set(Object.values(availableTags).map((tag) => tag.name))).values()], [availableTags]);
+
+    useEffect(() => {
+        dispatch(loadTags());
+    }, []);
 
     const addTag = (e) => {
         if(e.target.value.length) {
@@ -34,10 +53,7 @@ export default function AddArticleForm(): ReactElement {
             setTagInput(false);
         }
     };
-
-    const removeTag = (tag) => {
-        setTags([...tags.filter((t) => t !== tag)]);
-    };
+    const removeTag = (tag) => setTags([...tags.filter((t) => t !== tag)]);
 
     return <Form {...formItemLayout}>
         <Form.Item label="Title">
@@ -87,6 +103,21 @@ export default function AddArticleForm(): ReactElement {
                 'list', 'bullet', 'indent',
                 'link', 'image'
               ]} theme={'snow'} value={body} onChange={(value) => setBody(value)} />
+        </Form.Item>
+
+        <Form.Item label="Cover">
+            <Input
+                accept="image/*"
+                id="image"
+                type="file"
+                onChange={({target}) => setImage(target.files[0])}
+            />
+        </Form.Item>
+
+        <Form.Item {...tailFormItemLayout}>
+            <Button type="primary" htmlType="submit" onClick={() => dispatch(createArticle(title, tags, body, image))}>
+                Create
+            </Button>
         </Form.Item>
         
         <style jsx global>{`
