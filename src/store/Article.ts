@@ -4,8 +4,10 @@ import { ActionDispatcher, CALL_API } from './middleware/NetworkMiddlewareTypes'
 import { getDefaultHeader } from './middleware/Network';
 import { loadTags, tag } from './Tag';
 import { createReducer } from './Reducer/Reducer';
+import { author } from './Author';
 
 export const article = new schema.Entity('article', {
+    author,
     tags: [tag]
 });
 
