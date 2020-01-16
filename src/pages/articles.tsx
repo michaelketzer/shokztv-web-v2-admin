@@ -4,9 +4,16 @@ import Head from 'next/head';
 import Layout from 'antd/lib/layout';
 import Link from 'next/link';
 import { Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { loadArticles } from '../store/Article';
 const { Header, Content } = Layout;
 
 export default function Articles(): ReactElement {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(loadArticles());
+    }, []);
+    
     return <Layout className="layout" style={{ height: '100vh' }}>
         <Head>
             <title>Articles</title>
