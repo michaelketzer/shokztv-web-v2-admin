@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
-import { ADD_ARTICLE_FAILURE, ADD_ARTICLE_SUCCESS, ADD_ARTICLE_REQUEST, LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS, LOAD_ARTICLES_FAILURE } from './Actions';
+import { ADD_ARTICLE_FAILURE, ADD_ARTICLE_SUCCESS, ADD_ARTICLE_REQUEST, LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS, LOAD_ARTICLES_FAILURE, PUBLISH_ARTICLE_FAILURE, PUBLISH_ARTICLE_SUCCESS, PUBLISH_ARTICLE_REQUEST, UNPUBLISH_ARTICLE_FAILURE, UNPUBLISH_ARTICLE_SUCCESS, UNPUBLISH_ARTICLE_REQUEST } from './Actions';
 import { ActionDispatcher, CALL_API } from './middleware/NetworkMiddlewareTypes';
 import { getDefaultHeader } from './middleware/Network';
 import { loadTags, tag } from './Tag';
@@ -11,15 +11,11 @@ export const article = new schema.Entity('article', {
     tags: [tag]
 });
 
-interface Article {
+export interface Article {
     id: number;
     title: string;
     body: string;
-    tags: Array<{
-        id: number;
-        name: string;
-        image?: string;
-    }>;
+    tags: number[];
     cover: string;
     status: string;
     author: number;
@@ -60,7 +56,7 @@ export function createArticle(title: string, tags: string[], body: string, cover
         cover && data.set('cover', cover);
         tags.forEach((tag) => data.append('tags', tag));
         
-        dispatch<Response>({
+        await dispatch<Response>({
             [CALL_API]: {
                 endpoint: 'http://localhost/article/create',
                 method: 'post',
@@ -78,6 +74,53 @@ export function createArticle(title: string, tags: string[], body: string, cover
             },
         });
 
-        dispatch(loadTags());
+        await dispatch(loadTags());
+        await dispatch(loadArticles());
+    }
+}
+
+export function publishArticle(articleId: number): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        await dispatch<Response>({
+            [CALL_API]: {
+                endpoint: 'http://localhost/article/:articleId/publish',
+                method: 'patch',
+                types: {
+                    requestType: PUBLISH_ARTICLE_REQUEST,
+                    successType: PUBLISH_ARTICLE_SUCCESS,
+                    failureType: PUBLISH_ARTICLE_FAILURE,
+                },
+                options: {
+                    urlParams: {
+                        articleId,
+                    } ,
+                },
+            },
+        });
+
+        await dispatch(loadArticles());
+    }
+}
+
+export function unpublishArticle(articleId: number): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        await dispatch<Response>({
+            [CALL_API]: {
+                endpoint: 'http://localhost/article/:articleId/unpublish',
+                method: 'patch',
+                types: {
+                    requestType: UNPUBLISH_ARTICLE_REQUEST,
+                    successType: UNPUBLISH_ARTICLE_SUCCESS,
+                    failureType: UNPUBLISH_ARTICLE_FAILURE,
+                },
+                options: {
+                    urlParams: {
+                        articleId,
+                    } ,
+                },
+            },
+        });
+
+        await dispatch(loadArticles());
     }
 }

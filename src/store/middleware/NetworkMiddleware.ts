@@ -97,7 +97,7 @@ async function handleErrorResponse(
   }
   //Server error - response code >= 400:
   const respType = error.headers.get('Content-Type')!;
-  const isJson = respType.indexOf('application/json') !== -1 || respType.indexOf('application/javascript') !== -1;
+  const isJson = respType && (respType.indexOf('application/json') !== -1 || respType.indexOf('application/javascript') !== -1);
   let responseText;
   try {
     responseText = isJson ? await error.json() : await error.text();

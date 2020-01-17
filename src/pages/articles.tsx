@@ -3,9 +3,10 @@ import PageMenu from './components/PageMenu';
 import Head from 'next/head';
 import Layout from 'antd/lib/layout';
 import Link from 'next/link';
-import { Button } from 'antd';
+import { Button, Divider } from 'antd';
 import { useDispatch } from 'react-redux';
 import { loadArticles } from '../store/Article';
+import ArticleList from './articles/articleList';
 const { Header, Content } = Layout;
 
 export default function Articles(): ReactElement {
@@ -23,6 +24,10 @@ export default function Articles(): ReactElement {
         <Header  style={{ height: '46px' }}><PageMenu /></Header>
         <Content style={{ padding: '50px' }}>
             <div>
+                <ArticleList />
+
+                <Divider />
+
                 <Link href={'/addArticle'}>
                     <Button type="primary">
                         Add Article
