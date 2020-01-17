@@ -69,7 +69,7 @@ async function handleResponse(response: Response): Promise<Response | object | s
     return new Promise((resolve, reject) => {
         if(response.ok) {
             const respType = response.headers.get('Content-Type')!;
-            const isJson = respType.indexOf('application/json') !== -1 || respType.indexOf('application/javascript') !== -1;
+            const isJson = respType && (respType.indexOf('application/json') !== -1 || respType.indexOf('application/javascript') !== -1);
             try {
                 if(isJson) {
                     response.json().then((data) => resolve(data));
