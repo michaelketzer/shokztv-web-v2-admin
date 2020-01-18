@@ -39,7 +39,7 @@ export function loadCurrentUser(): ActionDispatcher<Promise<void>> {
         if(!getState().ui.currentUser) {
             const response = await dispatch<Response>({
                 [CALL_API]: {
-                    endpoint: 'http://localhost/auth/user',
+                    endpoint: `${process.env.API_URL}/auth/user`,
                     types: {
                         requestType: LOAD_CURRENT_USER_REQUEST,
                         successType: LOAD_CURRENT_USER_SUCCESS,
@@ -49,7 +49,7 @@ export function loadCurrentUser(): ActionDispatcher<Promise<void>> {
             });
 
             if(!response) {
-                location.href = 'http://localhost/auth/twitch';
+                location.href = `${process.env.API_URL}/auth/twitch`;
             }
         }
     }
@@ -60,7 +60,7 @@ export function authUser(code: string) {
         if(!getState().ui.currentUser) {
             const jwt = await dispatch({
                 [CALL_API]: {
-                    endpoint: `http://localhost/auth/twitch/callback?code=${code}`,
+                    endpoint: `${process.env.API_URL}/auth/twitch/callback?code=${code}`,
                     headers: { 'Content-Type': 'text/html' },
                     types: {
                         requestType: AUTH_USER_REQUEST,

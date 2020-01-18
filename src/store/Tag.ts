@@ -34,7 +34,7 @@ export function loadTags(): ActionDispatcher<Promise<void>> {
     return async (dispatch, getState) => {
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/tag/list',
+                endpoint: `${process.env.API_URL}/tag/list`,
                 schema: [tag],
                 types: {
                     requestType: LOAD_TAGS_REQUEST,
@@ -54,7 +54,7 @@ export function createTag(name: string, file?: File): ActionDispatcher<Promise<v
         
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/tag/create',
+                endpoint: `${process.env.API_URL}/tag/create`,
                 method: 'post',
                 headers: {
                     ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
@@ -82,7 +82,7 @@ export function patchTag(tagId: number, name?: string, file?: File): ActionDispa
 
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/tag/:tagId',
+                endpoint: `${process.env.API_URL}/tag/:tagId`,
                 method: 'patch',
                 headers: {
                     ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
@@ -109,7 +109,7 @@ export function deleteTag(tagId: number): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/tag/:tagId',
+                endpoint: `${process.env.API_URL}/tag/:tagId`,
                 method: 'del',
                 types: {
                     requestType: DELETE_TAG_REQUEST,

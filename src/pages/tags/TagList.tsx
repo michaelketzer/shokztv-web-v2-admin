@@ -40,7 +40,7 @@ export default function TagList(): ReactElement {
                     ...(!image ? [<div onClick={() => onEdit(id)}><Icon type="picture" /> Image</div>] : []),
                     <div onClick={() => dispatch(deleteTag(id))}><Icon type="delete" /> Delete</div>,
                 ]} 
-                cover={<img alt={`tag-${name}`} src={`http://localhost${image}`} height={200} style={{objectFit: 'cover'}}/>}>
+                cover={<img alt={`tag-${name}`} src={`${process.env.API_URL}${image}`} height={200} style={{objectFit: 'cover'}}/>}>
                 <Card.Meta title={name} />
             </Card>
         </Col>)}

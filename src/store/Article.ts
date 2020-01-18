@@ -34,7 +34,7 @@ export function loadArticles(): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/article/list',
+                endpoint: `${process.env.API_URL}/article/list`,
                 schema: [article],
                 types: {
                     requestType: LOAD_ARTICLES_REQUEST,
@@ -58,7 +58,7 @@ export function createArticle(title: string, tags: string[], body: string, cover
         
         await dispatch<Response>({
             [CALL_API]: {
-                endpoint: 'http://localhost/article/create',
+                endpoint: `${process.env.API_URL}/article/create`,
                 method: 'post',
                 headers: {
                     ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
@@ -88,7 +88,7 @@ export function patchArticle(articleId: number, title: string, tags: string[], b
         
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/article/:articleId',
+                endpoint: `${process.env.API_URL}/article/:articleId`,
                 method: 'patch',
                 headers: {
                     ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
@@ -116,7 +116,7 @@ export function publishArticle(articleId: number): ActionDispatcher<Promise<void
     return async (dispatch) => {
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/article/:articleId/publish',
+                endpoint: `${process.env.API_URL}/article/:articleId/publish`,
                 method: 'patch',
                 types: {
                     requestType: PUBLISH_ARTICLE_REQUEST,
@@ -139,7 +139,7 @@ export function unpublishArticle(articleId: number): ActionDispatcher<Promise<vo
     return async (dispatch) => {
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/article/:articleId/unpublish',
+                endpoint: `${process.env.API_URL}/article/:articleId/unpublish`,
                 method: 'patch',
                 types: {
                     requestType: UNPUBLISH_ARTICLE_REQUEST,

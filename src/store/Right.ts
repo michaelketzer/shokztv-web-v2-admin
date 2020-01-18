@@ -19,7 +19,7 @@ export function loadRights(): ActionDispatcher<Promise<void>> {
         if(Object.keys(getState().entities.role).length === 0) {
             await dispatch<Promise<Response>>({
                 [CALL_API]: {
-                    endpoint: 'http://localhost/right/list',
+                    endpoint: `${process.env.API_URL}/right/list`,
                     schema: [right],
                     types: {
                         requestType: LOAD_RIGHTS_REQUEST,
