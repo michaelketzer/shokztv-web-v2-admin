@@ -50,7 +50,7 @@ export function loadRoles(): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         await dispatch<Promise<Response>>({
             [CALL_API]: {
-                endpoint: 'http://localhost/role/list',
+                endpoint: `${process.env.API_URL}/role/list`,
                 schema: [role],
                 types: {
                     requestType: LOAD_ROLES_REQUEST,
@@ -66,7 +66,7 @@ export function addRole(name: string):  ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const response = await dispatch<Promise<string>>({
             [CALL_API]: {
-                endpoint: `http://localhost/role/create`,
+                endpoint: `${process.env.API_URL}/role/create`,
                 method: 'post',
                 types: {
                     requestType: ADD_ROLE_REQUEST,
@@ -93,7 +93,7 @@ export function addRight(roleId: number, rightId: number):  ActionDispatcher<Pro
         if(!role.rights.includes(rightId)) {
             dispatch<Promise<Response>>({
                 [CALL_API]: {
-                    endpoint: `http://localhost/role/assignRight/:roleId/:rightId`,
+                    endpoint: `${process.env.API_URL}/role/assignRight/:roleId/:rightId`,
                     method: 'put',
                     types: {
                         requestType: ASSIGN_ROLE_RIGHT_REQUEST,
@@ -118,7 +118,7 @@ export function removeRight(roleId: number, rightId: number):  ActionDispatcher<
         if(role.rights.includes(rightId)) {
             dispatch<Promise<Response>>({
                 [CALL_API]: {
-                    endpoint: `http://localhost/role/removeRight/:roleId/:rightId`,
+                    endpoint: `${process.env.API_URL}/role/removeRight/:roleId/:rightId`,
                     method: 'del',
                     types: {
                         requestType: REMOVE_ROLE_RIGHT_REQUEST,

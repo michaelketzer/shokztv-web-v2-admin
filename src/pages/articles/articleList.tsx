@@ -45,14 +45,14 @@ export default function ArticleList(): ReactElement {
 
             return <List.Item 
                 key={item.id}
-                extra={<img width={512} alt="logo" src={`http://localhost${item.cover}`}/>}
+                extra={<img width={512} alt="logo" src={`${process.env.API_URL}${item.cover}`}/>}
                 actions={[
                     <Link href={`/editArticle/${item.id}`}><div><IconText type="edit" text="Edit" key="edit" /></div></Link>,
                     <div onClick={() => togglePublishStatus(item.id, item.status)}><IconText type="global" text={item.status !== 'published' ? 'Publish' : 'Unpublish'} key="list-vertical-like-o" /></div>,
                 ]}
             >
                 <List.Item.Meta
-                    avatar={<Avatar src={`http://localhost${author.avatar}`} size={'large'} />}
+                    avatar={<Avatar src={`${process.env.API_URL}${author.avatar}`} size={'large'} />}
                     title={item.title}
                     description={`${author.name} - ${dayjs.unix(item.created).format('DD.MM.YYYY HH:mm')}`}
                 />
