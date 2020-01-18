@@ -5,6 +5,8 @@ import { articlesSelector } from "../../store/selectors/article";
 import { Article, publishArticle, unpublishArticle } from "../../store/Article";
 import { AuthorEntities } from "../../store/Author";
 import { authorEntitiesSelector } from "../../store/selectors/author";
+import dayjs from 'dayjs';
+import Link from 'next/link';
 
 
 const IconText = ({ type, text }) => (
@@ -45,14 +47,14 @@ export default function ArticleList(): ReactElement {
                 key={item.id}
                 extra={<img width={512} alt="logo" src={`http://localhost${item.cover}`}/>}
                 actions={[
-                    <IconText type="edit" text="Edit" key="edit" />,
+                    <Link href={`/editArticle/${item.id}`}><div><IconText type="edit" text="Edit" key="edit" /></div></Link>,
                     <div onClick={() => togglePublishStatus(item.id, item.status)}><IconText type="global" text={item.status !== 'published' ? 'Publish' : 'Unpublish'} key="list-vertical-like-o" /></div>,
                 ]}
             >
                 <List.Item.Meta
                     avatar={<Avatar src={`http://localhost${author.avatar}`} size={'large'} />}
                     title={item.title}
-                    description={`${author.name} - ${item.created}`}
+                    description={`${author.name} - ${dayjs.unix(item.created).format('DD.MM.YYYY HH:mm')}`}
                 />
                 <div dangerouslySetInnerHTML={{__html: item.body}} />
             </List.Item>;

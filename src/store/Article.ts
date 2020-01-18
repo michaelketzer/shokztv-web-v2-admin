@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
-import { ADD_ARTICLE_FAILURE, ADD_ARTICLE_SUCCESS, ADD_ARTICLE_REQUEST, LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS, LOAD_ARTICLES_FAILURE, PUBLISH_ARTICLE_FAILURE, PUBLISH_ARTICLE_SUCCESS, PUBLISH_ARTICLE_REQUEST, UNPUBLISH_ARTICLE_FAILURE, UNPUBLISH_ARTICLE_SUCCESS, UNPUBLISH_ARTICLE_REQUEST } from './Actions';
+import { ADD_ARTICLE_FAILURE, ADD_ARTICLE_SUCCESS, ADD_ARTICLE_REQUEST, LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS, LOAD_ARTICLES_FAILURE, PUBLISH_ARTICLE_FAILURE, PUBLISH_ARTICLE_SUCCESS, PUBLISH_ARTICLE_REQUEST, UNPUBLISH_ARTICLE_FAILURE, UNPUBLISH_ARTICLE_SUCCESS, UNPUBLISH_ARTICLE_REQUEST, UPDATE_ARTICLE_REQUEST, UPDATE_ARTICLE_SUCCESS, UPDATE_ARTICLE_FAILURE } from './Actions';
 import { ActionDispatcher, CALL_API } from './middleware/NetworkMiddlewareTypes';
 import { getDefaultHeader } from './middleware/Network';
 import { loadTags, tag } from './Tag';
@@ -32,7 +32,7 @@ export const reducer = combinedReducer;
 
 export function loadArticles(): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
-        dispatch<Response>({
+        await dispatch<Promise<Response>>({
             [CALL_API]: {
                 endpoint: 'http://localhost/article/list',
                 schema: [article],
@@ -79,9 +79,42 @@ export function createArticle(title: string, tags: string[], body: string, cover
     }
 }
 
+export function patchArticle(articleId: number, title: string, tags: string[], body: string): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        const data = new FormData();
+        data.set('title', title);
+        data.set('body', body);
+        tags.forEach((tag) => data.append('tags', tag));
+        
+        await dispatch<Promise<Response>>({
+            [CALL_API]: {
+                endpoint: 'http://localhost/article/:articleId',
+                method: 'patch',
+                headers: {
+                    ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
+                },
+                types: {
+                    requestType: UPDATE_ARTICLE_REQUEST,
+                    successType: UPDATE_ARTICLE_SUCCESS,
+                    failureType: UPDATE_ARTICLE_FAILURE,
+                },
+                options: {
+                    urlParams: {
+                        articleId,
+                    },
+                    data
+                },
+            },
+        });
+
+        await dispatch(loadTags());
+        await dispatch(loadArticles());
+    }
+}
+
 export function publishArticle(articleId: number): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
-        await dispatch<Response>({
+        await dispatch<Promise<Response>>({
             [CALL_API]: {
                 endpoint: 'http://localhost/article/:articleId/publish',
                 method: 'patch',
@@ -104,7 +137,7 @@ export function publishArticle(articleId: number): ActionDispatcher<Promise<void
 
 export function unpublishArticle(articleId: number): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
-        await dispatch<Response>({
+        await dispatch<Promise<Response>>({
             [CALL_API]: {
                 endpoint: 'http://localhost/article/:articleId/unpublish',
                 method: 'patch',

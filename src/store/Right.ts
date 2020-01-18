@@ -17,7 +17,7 @@ export const reducer = combinedReducer;
 export function loadRights(): ActionDispatcher<Promise<void>> {
     return async (dispatch, getState) => {
         if(Object.keys(getState().entities.role).length === 0) {
-            await dispatch<Response>({
+            await dispatch<Promise<Response>>({
                 [CALL_API]: {
                     endpoint: 'http://localhost/right/list',
                     schema: [right],
