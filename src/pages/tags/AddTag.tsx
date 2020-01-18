@@ -23,6 +23,7 @@ export default function AddTag(): ReactElement {
         setLoading(false);
         setShowModal(false);
         setTagName('');
+        setImage(null);
       }
   }
 

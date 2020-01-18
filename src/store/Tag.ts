@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
-import { LOAD_TAGS_REQUEST, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAILURE, ADD_TAG_REQUEST, ADD_TAG_SUCCESS, ADD_TAG_FAILURE } from './Actions';
+import { LOAD_TAGS_REQUEST, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAILURE, ADD_TAG_REQUEST, ADD_TAG_SUCCESS, ADD_TAG_FAILURE, DELETE_TAG_REQUEST, DELETE_TAG_SUCCESS, DELETE_TAG_FAILURE, UPDATE_TAG_REQUEST, UPDATE_TAG_SUCCESS, UPDATE_TAG_FAILURE } from './Actions';
 import { createReducer } from './Reducer/Reducer';
 import { ActionDispatcher, CALL_API } from './middleware/NetworkMiddlewareTypes';
 import { Tag } from '../@types/Entities/Tag';
@@ -11,25 +11,38 @@ export interface TagEntities {
     [x: number]: Tag;
 };
 
-const {combinedReducer} = createReducer<TagEntities>({});
+interface DeleteTagAction {
+    options: {
+        urlParams: {
+            tagId: number;
+        };
+    };
+    type: typeof DELETE_TAG_SUCCESS;
+}
+
+const {addReducer, combinedReducer} = createReducer<TagEntities>({});
+
+addReducer<DeleteTagAction>(DELETE_TAG_SUCCESS, (state, {options: {urlParams: {tagId}}}) => {
+    const newState = {...state};
+    delete newState[tagId];
+    return newState;
+});
 
 export const reducer = combinedReducer;
 
 export function loadTags(): ActionDispatcher<Promise<void>> {
     return async (dispatch, getState) => {
-        if(Object.keys(getState().entities.tag).length === 0) {
-            await dispatch<Response>({
-                [CALL_API]: {
-                    endpoint: 'http://localhost/tag/list',
-                    schema: [tag],
-                    types: {
-                        requestType: LOAD_TAGS_REQUEST,
-                        successType: LOAD_TAGS_SUCCESS,
-                        failureType: LOAD_TAGS_FAILURE,
-                    },
+        await dispatch<Promise<Response>>({
+            [CALL_API]: {
+                endpoint: 'http://localhost/tag/list',
+                schema: [tag],
+                types: {
+                    requestType: LOAD_TAGS_REQUEST,
+                    successType: LOAD_TAGS_SUCCESS,
+                    failureType: LOAD_TAGS_FAILURE,
                 },
-            });
-        }
+            },
+        });
     }
 }
 
@@ -39,7 +52,7 @@ export function createTag(name: string, file?: File): ActionDispatcher<Promise<v
         data.set('name', name);
         file && data.set('image', file);
         
-        await dispatch<Response>({
+        await dispatch<Promise<Response>>({
             [CALL_API]: {
                 endpoint: 'http://localhost/tag/create',
                 method: 'post',
@@ -67,17 +80,43 @@ export function patchTag(tagId: number, name?: string, file?: File): ActionDispa
         name && data.set('name', name);
         file && data.set('image', file);
 
-        dispatch<Response>({
+        await dispatch<Promise<Response>>({
             [CALL_API]: {
                 endpoint: 'http://localhost/tag/:tagId',
                 method: 'patch',
+                headers: {
+                    ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
+                },
                 types: {
-                    requestType: ADD_TAG_REQUEST,
-                    successType: ADD_TAG_SUCCESS,
-                    failureType: ADD_TAG_FAILURE,
+                    requestType: UPDATE_TAG_REQUEST,
+                    successType: UPDATE_TAG_SUCCESS,
+                    failureType: UPDATE_TAG_FAILURE,
                 },
                 options: {
                     data,
+                    urlParams: {
+                        tagId,
+                    },
+                },
+            },
+        });
+
+        await dispatch(loadTags());
+    }
+}
+
+export function deleteTag(tagId: number): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        await dispatch<Promise<Response>>({
+            [CALL_API]: {
+                endpoint: 'http://localhost/tag/:tagId',
+                method: 'del',
+                types: {
+                    requestType: DELETE_TAG_REQUEST,
+                    successType: DELETE_TAG_SUCCESS,
+                    failureType: DELETE_TAG_FAILURE,
+                },
+                options: {
                     urlParams: {
                         tagId,
                     },

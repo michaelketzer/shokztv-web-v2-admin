@@ -48,7 +48,7 @@ export const reducer = combinedReducer;
 
 export function loadRoles(): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
-        await dispatch<Response>({
+        await dispatch<Promise<Response>>({
             [CALL_API]: {
                 endpoint: 'http://localhost/role/list',
                 schema: [role],
@@ -64,7 +64,7 @@ export function loadRoles(): ActionDispatcher<Promise<void>> {
 
 export function addRole(name: string):  ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
-        const response = await dispatch<string>({
+        const response = await dispatch<Promise<string>>({
             [CALL_API]: {
                 endpoint: `http://localhost/role/create`,
                 method: 'post',
@@ -81,9 +81,7 @@ export function addRole(name: string):  ActionDispatcher<Promise<void>> {
             },
         });
 
-        console.log(response, response === 'success');
         if(response === 'success') {
-            console.log('reloading roles');
             await dispatch(loadRoles());
         }
     }
@@ -93,7 +91,7 @@ export function addRight(roleId: number, rightId: number):  ActionDispatcher<Pro
     return async (dispatch, getState) => {
         const role = getState().entities.role[roleId];
         if(!role.rights.includes(rightId)) {
-            dispatch<Response>({
+            dispatch<Promise<Response>>({
                 [CALL_API]: {
                     endpoint: `http://localhost/role/assignRight/:roleId/:rightId`,
                     method: 'put',
@@ -118,7 +116,7 @@ export function removeRight(roleId: number, rightId: number):  ActionDispatcher<
     return async (dispatch, getState) => {
         const role = getState().entities.role[roleId];
         if(role.rights.includes(rightId)) {
-            dispatch<Response>({
+            dispatch<Promise<Response>>({
                 [CALL_API]: {
                     endpoint: `http://localhost/role/removeRight/:roleId/:rightId`,
                     method: 'del',
