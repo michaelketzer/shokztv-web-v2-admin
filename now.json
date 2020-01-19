@@ -17,6 +17,6 @@
       }
     ],
     "env": {
-        "API_URL": "https://staging-web-api.shokz.tv"
+        "API_URL": "@staging-url"
     }
   }
