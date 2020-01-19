@@ -5,6 +5,7 @@ import {mergeStates} from '../utils/MergeStates';
 import { SET_UI, LOAD_CURRENT_USER_REQUEST, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, AUTH_USER_REQUEST, AUTH_USER_SUCCESS, AUTH_USER_FAILURE } from "./Actions";
 import { CALL_API, ActionDispatcher } from './middleware/NetworkMiddlewareTypes';
 import { ApiActionResponse } from "./middleware/Network";
+import NetworkError from "./middleware/NetworkError";
 
 export interface Ui {
     currentUser: User | null;
@@ -37,7 +38,7 @@ export const uiReducer = combinedReducer;
 export function loadCurrentUser(): ActionDispatcher<Promise<void>> {
     return async (dispatch, getState) => {
         if(!getState().ui.currentUser) {
-            const response = await dispatch<Response>({
+            const response = await dispatch<Promise<Response | NetworkError>>({
                 [CALL_API]: {
                     endpoint: `${process.env.API_URL}/auth/user`,
                     types: {
@@ -47,8 +48,9 @@ export function loadCurrentUser(): ActionDispatcher<Promise<void>> {
                     },
                 },
             });
+            console.log(response);
 
-            if(!response) {
+            if(!response || (response as NetworkError).responseStatus === 401) {
                 location.href = `${process.env.API_URL}/auth/twitch`;
             }
         }
