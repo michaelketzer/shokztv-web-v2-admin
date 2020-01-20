@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../../store/selectors/tag';
 import { Article, patchArticle } from '../../store/Article';
 import { loadTags } from '../../store/Tag';
+import Router from 'next/router';
 
 const formItemLayout = {
     labelCol: {
@@ -60,6 +61,7 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
         setLoading(true);
         await dispatch(patchArticle(article.id, title, tags, body));
         setLoading(false);
+        Router.push('/articles');
     };
 
     return <Form {...formItemLayout}>
