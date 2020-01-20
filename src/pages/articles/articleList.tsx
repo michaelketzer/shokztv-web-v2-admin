@@ -57,9 +57,15 @@ export default function ArticleList(): ReactElement {
                     title={item.title}
                     description={`${author.name} - ${dayjs.unix(item.created).format('DD.MM.YYYY HH:mm')}`}
                 />
-                <Paragraph ellipsis={{ rows: 10, expandable: false }}>
+                <Paragraph ellipsis={{ rows: 10, expandable: false }} >
                     <div dangerouslySetInnerHTML={{__html: item.body}} />
                 </Paragraph>
+
+                <style jsx global>{`
+                    .ant-list-item-main {
+                        overflow: hidden;
+                    }
+                `}</style>
             </List.Item>;
         }}
   />;
