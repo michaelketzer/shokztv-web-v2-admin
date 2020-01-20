@@ -7,6 +7,7 @@ import { AuthorEntities } from "../../store/Author";
 import { authorEntitiesSelector } from "../../store/selectors/author";
 import dayjs from 'dayjs';
 import Link from 'next/link';
+import Paragraph from "antd/lib/typography/Paragraph";
 
 
 const IconText = ({ type, text }) => (
@@ -18,7 +19,7 @@ const IconText = ({ type, text }) => (
   
 
 export default function ArticleList(): ReactElement {
-    const articles: Article[] = Object.values(useSelector(articlesSelector));
+    const articles: Article[] = Object.values(useSelector(articlesSelector)).sort(({created: a}, {created: b}) => b - a);
     const authorEntities: AuthorEntities = useSelector(authorEntitiesSelector);
     const dispatch = useDispatch();
 
@@ -56,7 +57,9 @@ export default function ArticleList(): ReactElement {
                     title={item.title}
                     description={`${author.name} - ${dayjs.unix(item.created).format('DD.MM.YYYY HH:mm')}`}
                 />
-                <div dangerouslySetInnerHTML={{__html: item.body}} />
+                <Paragraph ellipsis={{ rows: 10, expandable: false }}>
+                    <div dangerouslySetInnerHTML={{__html: item.body}} />
+                </Paragraph>
             </List.Item>;
         }}
   />;

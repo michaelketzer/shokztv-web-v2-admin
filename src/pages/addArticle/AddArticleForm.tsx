@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../../store/selectors/tag';
 import { createArticle } from '../../store/Article';
 import { loadTags } from '../../store/Tag';
+import Router from 'next/router';
 
 const formItemLayout = {
     labelCol: {
@@ -38,6 +39,7 @@ export default function AddArticleForm(): ReactElement {
     const [tags, setTags] = useState<string[]>([]);
     const [image, setImage] = useState<File | null>(null);
     const [tagInput, setTagInput] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [newTagInput, setNewTagInput] = useState('');
     const availableTags = useSelector(tagsSelector);
     const autoCompleteTags = useMemo(() => [...(new Set(Object.values(availableTags).map((tag) => tag.name))).values()], [availableTags]);
@@ -54,6 +56,13 @@ export default function AddArticleForm(): ReactElement {
         }
     };
     const removeTag = (tag) => setTags([...tags.filter((t) => t !== tag)]);
+
+    const create = async () => {
+        setLoading(true);
+        await dispatch(createArticle(title, tags, body, image));
+        setLoading(false);
+        Router.push('/articles');
+    };
 
     return <Form {...formItemLayout}>
         <Form.Item label="Title">
@@ -115,7 +124,7 @@ export default function AddArticleForm(): ReactElement {
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" onClick={() => dispatch(createArticle(title, tags, body, image))}>
+            <Button type="primary" htmlType="submit" onClick={create} loading={loading}>
                 Create
             </Button>
         </Form.Item>
