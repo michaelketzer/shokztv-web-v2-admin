@@ -1,13 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Row, Button, Modal, Input, Upload, Icon } from 'antd';
+import { Row, Button, Modal, Input } from 'antd';
 import { createTag } from '../../store/Tag';
-
-function readFile(file: File): File {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    return file;
-} 
 
 export default function AddTag(): ReactElement {
   const dispatch = useDispatch();
@@ -52,7 +46,6 @@ export default function AddTag(): ReactElement {
             type="file"
             onChange={({target}) => setImage(target.files[0])}
         />
-
     </Modal>
   </Row>;
 }
