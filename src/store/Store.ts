@@ -6,6 +6,7 @@ import { entityReducer } from "./Entities";
 import { TagEntities } from "./Tag";
 import { ArticleEntities } from "./Article";
 import { AuthorEntities } from "./Author";
+import { VideoEntities } from "./Video";
 
 export interface State {
     entities: {
@@ -14,6 +15,7 @@ export interface State {
         role: RoleEntities;
         right: RightEntities;
         tag: TagEntities;
+        video: VideoEntities;
     };
     ui: Ui;
 }

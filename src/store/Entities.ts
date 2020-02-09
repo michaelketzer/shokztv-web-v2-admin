@@ -5,6 +5,7 @@ import {reducer as right} from './Right'
 import {reducer as tag} from './Tag';;
 import {reducer as article} from './Article';
 import {reducer as author} from './Author';
+import {reducer as video} from './Video';
 
 export const entityReducer = combiner({
     article: entitiesReducer(article, 'article'),
@@ -12,4 +13,5 @@ export const entityReducer = combiner({
     role: entitiesReducer(role, 'role'),
     right: entitiesReducer(right, 'right'),
     tag: entitiesReducer(tag, 'tag'),
+    video: entitiesReducer(video, 'video')
 });
