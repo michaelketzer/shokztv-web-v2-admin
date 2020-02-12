@@ -46,10 +46,11 @@ export function loadTags(): ActionDispatcher<Promise<void>> {
     }
 }
 
-export function createTag(name: string, file?: File): ActionDispatcher<Promise<void>> {
+export function createTag(name: string, description: string, file?: File): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
         data.set('name', name);
+        data.set('description', description);
         file && data.set('image', file);
         
         await dispatch<Promise<Response>>({
