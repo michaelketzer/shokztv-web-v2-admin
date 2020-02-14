@@ -40,7 +40,7 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
         {tagInput && (
         <AutoComplete 
             dataSource={autoCompleteTags}
-            style={{ width: 150 }} 
+            style={{ width: 300 }}
             size="small" 
             onSelect={(value) => setNewTagInput(value as string)} 
             filterOption={(inputValue, option) => (option.props.children as string).indexOf(inputValue) !== -1}>
