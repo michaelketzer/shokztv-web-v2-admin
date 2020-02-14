@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Row, Col, Card, Icon, Modal, Form, Input } from "antd";
+import { Row, Col, Card, Icon, Modal, Form, Input, List } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { loadVideos, deleteVideo, patchVideo } from "../../store/Video";
 import { videoSelector } from "../../store/selectors/video";
@@ -36,16 +36,28 @@ export default function VideoList(): ReactElement {
     };
 
     return <Row type="flex" justify="start" gutter={[16, 16]}>
-        {Object.values(videos).map(({id, title, thumbnail}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
-            <Card
-                actions={[
-                    <div onClick={() => onEdit(id, title)}><Icon type="edit" /> Edit</div>,
-                    <div onClick={() => dispatch(deleteVideo(id))}><Icon type="delete" /> Delete</div>,
-                ]} 
-                cover={<img alt={`video-${name}`} src={`${process.env.API_URL}${thumbnail}`} height={200} style={{objectFit: 'cover'}}/>}>
-                <Card.Meta title={title} />
-            </Card>
-        </Col>)}
+        <List
+        itemLayout="horizontal"
+        size="large"
+        pagination={{
+            onChange: page => {
+                console.log(page);
+            },
+            pageSize: 10,
+            position: 'top'
+        }}
+        dataSource={Object.values(videos)}
+        renderItem={(({id, title, thumbnail}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
+                <Card
+                    actions={[
+                        <div onClick={() => onEdit(id, title)}><Icon type="edit" /> Edit</div>,
+                        <div onClick={() => dispatch(deleteVideo(id))}><Icon type="delete" /> Delete</div>,
+                    ]} 
+                    cover={<img alt={`video-${name}`} src={`${process.env.API_URL}${thumbnail}`} height={200} style={{objectFit: 'cover'}}/>}>
+                    <Card.Meta title={title} />
+                </Card>
+            </Col>)}
+        />
 
 
         <Modal title="Edit video" visible={showEditModal} onOk={onPatchVideo} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
