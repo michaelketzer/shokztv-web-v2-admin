@@ -6,7 +6,7 @@ import { videoSelector } from "../../store/selectors/video";
 
 export default function VideoList(): ReactElement {
     const dispatch = useDispatch();
-    const videos = useSelector(videoSelector);
+    const videos = Object.values(useSelector(videoSelector)).sort(({id: a}, {id: b}) => b - a);
 
     useEffect(() => {
         dispatch(loadVideos());
@@ -16,7 +16,6 @@ export default function VideoList(): ReactElement {
     const [id, setId] = useState<number | null>(null);
     const [title, setTitle] = useState('');
     const [loading, setLoading] = useState(false);
-
     
     const onEdit = (id: number, title: string) => {
         setId(id);
@@ -40,13 +39,10 @@ export default function VideoList(): ReactElement {
         itemLayout="horizontal"
         size="large"
         pagination={{
-            onChange: page => {
-                console.log(page);
-            },
             pageSize: 10,
             position: 'top'
         }}
-        dataSource={Object.values(videos)}
+        dataSource={videos}
         renderItem={(({id, title, thumbnail}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
                 <Card
                     actions={[
