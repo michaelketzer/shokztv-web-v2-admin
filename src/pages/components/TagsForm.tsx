@@ -34,20 +34,20 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
 
     return <Form.Item label="Tags">
         {tags.map((tag) => <Tag key={tag} closable={true} onClose={() => removeTag(tag)}>
-            {tag.length > 20 ? `${tag.slice(0, 20)}...` : tag}
+            {tag.length > 40 ? `${tag.slice(0, 40)}...` : tag}
         </Tag>)}
 
         {tagInput && (
         <AutoComplete 
             dataSource={autoCompleteTags}
-            style={{ width: 100 }} 
+            style={{ width: 150 }} 
             size="small" 
             onSelect={(value) => setNewTagInput(value as string)} 
             filterOption={(inputValue, option) => (option.props.children as string).indexOf(inputValue) !== -1}>
             <Input
                 type="text"
                 size="small"
-                style={{ width: 100 }}
+                style={{ width: 150 }}
                 value={newTagInput}
                 onChange={(e) => setNewTagInput(e.target.value)}
                 onBlur={addTag}
