@@ -17,9 +17,9 @@ export default function Videos(): ReactElement {
         <Header  style={{ height: '46px' }}><PageMenu /></Header>
         <Content style={{ padding: '50px' }}>
             <div>
-                <VideoList />
-                <Divider />
                 <AddVideo />
+                <Divider />
+                <VideoList />
             </div>
         </Content>
     </Layout>;

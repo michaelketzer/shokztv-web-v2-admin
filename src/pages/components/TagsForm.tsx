@@ -14,7 +14,10 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
     const [tagInput, setTagInput] = useState(false);
     const [newTagInput, setNewTagInput] = useState('');
     const availableTags = useSelector(tagsSelector);
-    const autoCompleteTags = useMemo(() => [...(new Set(Object.values(availableTags).map((tag) => tag.name))).values()].filter((tag) => !tags.includes(tag)), [availableTags]);
+    const autoCompleteTags = useMemo(() => 
+        [...(new Set(Object.values(availableTags).map((tag) => tag.name))).values()].filter((tag) => !tags.includes(tag)), 
+        [availableTags, tags]
+    );
 
     useEffect(() => {
         dispatch(loadTags());
