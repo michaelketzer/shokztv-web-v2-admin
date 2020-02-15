@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Row, Button, Modal, Input } from 'antd';
 import { createTag } from '../../store/Tag';
 import TextArea from 'antd/lib/input/TextArea';
+import { FileForm } from '../components/FileForm';
 
 export default function AddTag(): ReactElement {
   const dispatch = useDispatch();
@@ -47,12 +48,7 @@ export default function AddTag(): ReactElement {
 
         <div style={{margin: '10px 0'}} />
 
-        <Input
-            accept="image/*"
-            id="image"
-            type="file"
-            onChange={({target}) => setImage(target.files[0])}
-        />
+        <FileForm file={image} setFile={setImage} label={'Tag Image'} />
     </Modal>
   </Row>;
 }

@@ -6,6 +6,7 @@ import { createArticle } from '../../store/Article';
 import Router from 'next/router';
 import TagsForm from '../components/TagsForm';
 import { useDispatch } from 'react-redux';
+import { FileForm } from '../components/FileForm';
 
 const formItemLayout = {
     labelCol: {
@@ -69,13 +70,8 @@ export default function AddArticleForm(): ReactElement {
               ]} theme={'snow'} value={body} onChange={(value) => setBody(value)} />
         </Form.Item>
 
-        <Form.Item label="Cover">
-            <Input
-                accept="image/*"
-                id="image"
-                type="file"
-                onChange={({target}) => setImage(target.files[0])}
-            />
+        <Form.Item label="Cover Image">
+            <FileForm file={image} setFile={setImage} label={'Cover'} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
