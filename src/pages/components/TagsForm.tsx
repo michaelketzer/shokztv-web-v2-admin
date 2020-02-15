@@ -47,7 +47,7 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
             <Input
                 type="text"
                 size="small"
-                style={{ width: 150 }}
+                style={{ width: 300 }}
                 value={newTagInput}
                 onChange={(e) => setNewTagInput(e.target.value)}
                 onBlur={addTag}

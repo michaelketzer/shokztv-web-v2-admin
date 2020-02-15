@@ -24,15 +24,13 @@ export default function Articles(): ReactElement {
         <Header  style={{ height: '46px' }}><PageMenu /></Header>
         <Content style={{ padding: '50px', overflowY: 'scroll'}}>
             <div>
-                <ArticleList />
-
-                <Divider />
-
                 <Link href={'/addArticle'}>
                     <Button type="primary">
                         Add Article
                     </Button>
                 </Link>
+                <Divider />
+                <ArticleList />
             </div>
         </Content>
     </Layout>;
