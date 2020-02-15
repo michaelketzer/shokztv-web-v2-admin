@@ -7,6 +7,7 @@ import { tagsSelector } from '../../store/selectors/tag';
 import { Article, patchArticle } from '../../store/Article';
 import { loadTags } from '../../store/Tag';
 import Router from 'next/router';
+import TagsForm from '../components/TagsForm';
 
 const formItemLayout = {
     labelCol: {
@@ -38,24 +39,11 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
     const [title, setTitle] = useState(article.title);
     const [body, setBody] = useState(article.body);
     const [tags, setTags] = useState<string[]>(article.tags.map((id) => tagEntities[id].name));
-    const [tagInput, setTagInput] = useState(false);
-    const [newTagInput, setNewTagInput] = useState('');
-    const availableTags = useSelector(tagsSelector);
-    const autoCompleteTags = useMemo(() => [...(new Set(Object.values(availableTags).map((tag) => tag.name))).values()], [availableTags]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         dispatch(loadTags());
     }, []);
-
-    const addTag = (e) => {
-        if(e.target.value.length) {
-            setTags([...(new Set([...tags, e.target.value])).values()]);
-            setNewTagInput('');
-            setTagInput(false);
-        }
-    };
-    const removeTag = (tag) => setTags([...tags.filter((t) => t !== tag)]);
 
     const save = async () => {
         setLoading(true);
@@ -68,35 +56,8 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
         <Form.Item label="Title">
            <Input style={{ width: '100%' }} value={title} onChange={(e) => setTitle(e.target.value)} />
         </Form.Item>
-        <Form.Item label="Tags">
-            {tags.map((tag) => <Tag key={tag} closable={true} onClose={() => removeTag(tag)}>
-              {tag.length > 20 ? `${tag.slice(0, 20)}...` : tag}
-            </Tag>)}
 
-            {tagInput && (
-            <AutoComplete 
-                dataSource={autoCompleteTags}
-                style={{ width: 100 }} 
-                size="small" 
-                onSelect={(value) => setNewTagInput(value as string)} 
-                filterOption={(inputValue, option) => (option.props.children as string).indexOf(inputValue) !== -1}>
-                <Input
-                    type="text"
-                    size="small"
-                    style={{ width: 100 }}
-                    value={newTagInput}
-                    onChange={(e) => setNewTagInput(e.target.value)}
-                    onBlur={addTag}
-                    onPressEnter={addTag}
-                />
-            </AutoComplete>
-            )}
-            {!tagInput && (
-            <Tag onClick={() => setTagInput(true)} style={{ background: '#fff', borderStyle: 'dashed' }}>
-                <Icon type="plus" /> New Tag
-            </Tag>
-            )}
-        </Form.Item>
+        <TagsForm tags={tags} setTags={setTags} />
 
         <Form.Item label="Body">
             <ReactQuill style={{background: '#FFF'}} modules={{
