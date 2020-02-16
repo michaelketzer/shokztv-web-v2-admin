@@ -17,9 +17,9 @@ export default function Tags(): ReactElement {
         <Header  style={{ height: '46px' }}><PageMenu /></Header>
         <Content style={{ padding: '50px' }}>
             <div>
-                <TagList />
-                <Divider />
                 <AddTag />
+                <Divider />
+                <TagList />
             </div>
         </Content>
     </Layout>;
