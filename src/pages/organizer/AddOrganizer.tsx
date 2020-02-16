@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Button, Modal, Input } from 'antd';
-import { FileForm } from '../components/FileForm';
+import FileForm from '../components/FileForm';
 import { createOrganizer } from '../../store/Organizer';
 
 export default function AddOrganizer(): ReactElement {
