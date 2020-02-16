@@ -1,19 +1,23 @@
 import { ReactElement, useMemo } from "react";
 import { Upload } from "antd";
+import { stringify } from "querystring";
 
 interface Props {
   label?: string;
-  file: File;
+  file: File | string | null;
   setFile: (file: File) => void;
 }
 
 export default function FileForm({label = 'Upload', file, setFile}: Props): ReactElement {
   const src = useMemo(() => {
-    if(file) {
+    if(file instanceof File) {
       return URL.createObjectURL(file);
     }
+    if(typeof file === 'string') {
+      return process.env.API_URL + file;
+    }
 
-    return null;
+    return file;
   }, [file]);
 
   return <Upload

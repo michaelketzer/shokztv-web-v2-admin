@@ -5,7 +5,13 @@ import {
     LOAD_ORGANIZERS_FAILURE, 
     ADD_ORGANIZER_REQUEST, 
     ADD_ORGANIZER_SUCCESS, 
-    ADD_ORGANIZER_FAILURE
+    ADD_ORGANIZER_FAILURE,
+    UPDATE_ORGANIZER_SUCCESS,
+    UPDATE_ORGANIZER_FAILURE,
+    UPDATE_ORGANIZER_REQUEST,
+    DELETE_ORGANIZER_REQUEST,
+    DELETE_ORGANIZER_SUCCESS,
+    DELETE_ORGANIZER_FAILURE
 } from './Actions';
 import { createReducer } from './Reducer/Reducer';
 import { ActionDispatcher, CALL_API } from './middleware/NetworkMiddlewareTypes';
@@ -59,6 +65,61 @@ export function createOrganizer(name: string, icon?: File, logo?: File): ActionD
                 },
                 options: {
                     data
+                },
+            },
+        });
+
+        await dispatch(loadOrganizer());
+    }
+}
+
+export function patchOrganizer(organizerId: number, name?: string, icon?: File, logo?: File): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        const data = new FormData();
+        name && data.set('name', name);
+        icon && data.set('icon', icon);
+        logo && data.set('logo', logo);
+        
+        await dispatch<Promise<Response>>({
+            [CALL_API]: {
+                endpoint: `${process.env.API_URL}/organizer/:organizerId`,
+                method: 'patch',
+                headers: {
+                    ...(getDefaultHeader()['Authorization'] ? {'Authorization': getDefaultHeader()['Authorization']} : {})
+                },
+                types: {
+                    requestType: UPDATE_ORGANIZER_REQUEST,
+                    successType: UPDATE_ORGANIZER_SUCCESS,
+                    failureType: UPDATE_ORGANIZER_FAILURE,
+                },
+                options: {
+                    data,
+                    urlParams: {
+                        organizerId,
+                    },
+                },
+            },
+        });
+
+        await dispatch(loadOrganizer());
+    }
+}
+
+export function deleteOrganizer(organizerId: number): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        await dispatch<Promise<Response>>({
+            [CALL_API]: {
+                endpoint: `${process.env.API_URL}/organizer/:organizerId`,
+                method: 'del',
+                types: {
+                    requestType: DELETE_ORGANIZER_REQUEST,
+                    successType: DELETE_ORGANIZER_SUCCESS,
+                    failureType: DELETE_ORGANIZER_FAILURE,
+                },
+                options: {
+                    urlParams: {
+                        organizerId,
+                    },
                 },
             },
         });
