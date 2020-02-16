@@ -29,7 +29,7 @@ export default function AddOrganizer(): ReactElement {
         Add Organizer
     </Button>
     <Modal
-        title="Neuer Tag"
+        title="Add Organizer"
         visible={showModal}
         onOk={onCreate}
         onCancel={() => setShowModal(false)}
