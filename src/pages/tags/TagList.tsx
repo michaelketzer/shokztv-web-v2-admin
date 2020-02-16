@@ -4,7 +4,7 @@ import { loadTags, deleteTag, patchTag } from "../../store/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { tagsSelector } from "../../store/selectors/tag";
 import TextArea from "antd/lib/input/TextArea";
-import { FileForm } from "../components/FileForm";
+import FileForm from "../components/FileForm";
 
 export default function TagList(): ReactElement {
     const dispatch = useDispatch();
