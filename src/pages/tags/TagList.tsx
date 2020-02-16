@@ -8,7 +8,7 @@ import { FileForm } from "../components/FileForm";
 
 export default function TagList(): ReactElement {
     const dispatch = useDispatch();
-    const tags = useSelector(tagsSelector);
+    const tags = Object.values(useSelector(tagsSelector)).sort(({id: a}, {id: b}) => b - a);
 
     useEffect(() => {
         dispatch(loadTags());
@@ -58,7 +58,7 @@ export default function TagList(): ReactElement {
     };
 
     return <Row type="flex" justify="start" gutter={[16, 16]}>
-        {Object.values(tags).map(({id, name, description, image}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
+        {tags.map(({id, name, description, image}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
             <Card
                 actions={[
                     ...(!image ? [<div onClick={() => onAddImage(id)}><Icon type="picture" /> Image</div>] : []),
