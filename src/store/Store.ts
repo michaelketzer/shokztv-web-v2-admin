@@ -7,11 +7,13 @@ import { TagEntities } from "./Tag";
 import { ArticleEntities } from "./Article";
 import { AuthorEntities } from "./Author";
 import { VideoEntities } from "./Video";
+import { OrganizerEntities } from "./Organizer";
 
 export interface State {
     entities: {
         article: ArticleEntities;
         author: AuthorEntities;
+        organizer: OrganizerEntities;
         role: RoleEntities;
         right: RightEntities;
         tag: TagEntities;

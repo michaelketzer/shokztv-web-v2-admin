@@ -6,10 +6,12 @@ import {reducer as tag} from './Tag';;
 import {reducer as article} from './Article';
 import {reducer as author} from './Author';
 import {reducer as video} from './Video';
+import {reducer as organizer} from './Organizer';
 
 export const entityReducer = combiner({
     article: entitiesReducer(article, 'article'),
     author: entitiesReducer(author, 'author'),
+    organizer: entitiesReducer(organizer, 'organizer'),
     role: entitiesReducer(role, 'role'),
     right: entitiesReducer(right, 'right'),
     tag: entitiesReducer(tag, 'tag'),
