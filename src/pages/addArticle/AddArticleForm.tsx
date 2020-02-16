@@ -6,7 +6,7 @@ import { createArticle } from '../../store/Article';
 import Router from 'next/router';
 import TagsForm from '../components/TagsForm';
 import { useDispatch } from 'react-redux';
-import { FileForm } from '../components/FileForm';
+import FileForm from '../components/FileForm';
 
 const formItemLayout = {
     labelCol: {
