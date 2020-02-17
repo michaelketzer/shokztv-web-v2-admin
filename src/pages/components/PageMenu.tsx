@@ -27,6 +27,10 @@ const pages = [{
     icon: 'idcard',
     name: 'Organizer',
     path: '/organizer'
+}, {
+    icon: 'calendar',
+    name: 'Events',
+    path: '/events'
 }];
 
 export default function PageMenu(): ReactElement {
