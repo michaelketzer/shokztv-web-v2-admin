@@ -96,5 +96,7 @@ export function createEvent(
                 },
             },
         });
+
+        await dispatch(loadEvents());
     }
 }
