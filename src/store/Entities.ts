@@ -7,10 +7,12 @@ import {reducer as article} from './Article';
 import {reducer as author} from './Author';
 import {reducer as video} from './Video';
 import {reducer as organizer} from './Organizer';
+import {reducer as event} from './Events';
 
 export const entityReducer = combiner({
     article: entitiesReducer(article, 'article'),
     author: entitiesReducer(author, 'author'),
+    event: entitiesReducer(event, 'event'),
     organizer: entitiesReducer(organizer, 'organizer'),
     role: entitiesReducer(role, 'role'),
     right: entitiesReducer(right, 'right'),

@@ -8,11 +8,13 @@ import { ArticleEntities } from "./Article";
 import { AuthorEntities } from "./Author";
 import { VideoEntities } from "./Video";
 import { OrganizerEntities } from "./Organizer";
+import { EventEntities } from "./Events";
 
 export interface State {
     entities: {
         article: ArticleEntities;
         author: AuthorEntities;
+        event: EventEntities;
         organizer: OrganizerEntities;
         role: RoleEntities;
         right: RightEntities;

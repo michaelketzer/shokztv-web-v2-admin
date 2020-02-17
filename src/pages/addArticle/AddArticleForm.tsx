@@ -59,7 +59,7 @@ export default function AddArticleForm(): ReactElement {
                 toolbar: [
                     [{ 'header': [1, 2, false] }],
                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                    [{'list': 'ordered'}, {'list': 'bullet'}],
                     ['link', 'image'],
                 ],
             }} formats={[
@@ -86,6 +86,9 @@ export default function AddArticleForm(): ReactElement {
             }
             .ql-snow .ql-picker.ql-header .ql-picker-label::before {
                 position: absolute;
+            }
+            .ql-editor {
+                min-height: 130px;
             }
         `}</style>
     </Form>;
