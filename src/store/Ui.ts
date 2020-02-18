@@ -48,7 +48,6 @@ export function loadCurrentUser(): ActionDispatcher<Promise<void>> {
                     },
                 },
             });
-            console.log(response);
 
             if(!response || (response as NetworkError).responseStatus === 401) {
                 location.href = `${process.env.API_URL}/auth/twitch`;
