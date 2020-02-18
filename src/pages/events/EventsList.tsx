@@ -68,8 +68,6 @@ export default function EventsList(): ReactElement {
     const organizerOptions = useMemo(() => Object.values(organizerEntities), [organizerEntities]);
     const countryList = useMemo(() => Object.entries(getCodeList()).map(([code, name]) => ({code, name})).sort(({name: a}, {name: b}) =>  b > a ? 1 : 0), []);
 
-    console.log(organizerEntities);
-    
     useEffect(() => {
         dispatch(loadOrganizer());
         dispatch(loadEvents());
