@@ -27,4 +27,6 @@ export interface Event {
     links: EventLink[];
     banner: string;
     organizerLogo: string;
+    isFeatured: boolean;
+    isMainEvent: boolean;
 }

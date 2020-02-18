@@ -1,6 +1,5 @@
 import { ReactElement, useMemo } from "react";
 import { Upload } from "antd";
-import { stringify } from "querystring";
 
 interface Props {
   label?: string;
@@ -13,7 +12,7 @@ export default function FileForm({label = 'Upload', file, setFile}: Props): Reac
     if(file instanceof File) {
       return URL.createObjectURL(file);
     }
-    if(typeof file === 'string') {
+    if(typeof file === 'string' && file.length > 0) {
       return process.env.API_URL + file;
     }
 
