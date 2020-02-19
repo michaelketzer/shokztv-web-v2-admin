@@ -31,6 +31,10 @@ const pages = [{
     icon: 'calendar',
     name: 'Events',
     path: '/events'
+}, {
+    icon: 'read',
+    name: 'News',
+    path: '/news'
 }];
 
 export default function PageMenu(): ReactElement {
