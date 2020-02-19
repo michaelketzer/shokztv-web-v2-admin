@@ -1,9 +1,9 @@
 import { ReactElement, useEffect, useState, useMemo } from "react";
 import { Table, Tag, Button, Popconfirm, Drawer, Form, Input, Select, DatePicker, Icon } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { eventsSelector } from "../../store/selectors/event";
+import { eventsSelector, eventLinkEntitiesSelector } from "../../store/selectors/event";
 import { loadEvents, changeMainEvent, toggleFeature, deleteEvent, patchEvent } from "../../store/Events";
-import { Event } from '../../@types/Entities/Event';
+import { Event, EventLink } from '../../@types/Entities/Event';
 import dayjs from 'dayjs';
 import ReactCountryFlag from "react-country-flag"
 import { TagEntities } from "../../store/Tag";
@@ -16,6 +16,8 @@ import 'react-quill/dist/quill.snow.css';
 import { getCodeList } from 'country-list';
 import { organizerSelector } from "../../store/selectors/organizer";
 import moment from 'moment';
+import TagsForm from "../components/TagsForm";
+import { EditLink } from './AddEventForm';
 
 const dateFormat = 'DD.MM.YYYY';
 
@@ -60,7 +62,8 @@ const columns = (tags: TagEntities, organizer: OrganizerEntities, onEdit: (recor
 export default function EventsList(): ReactElement {
     const dispatch = useDispatch();
     const events: Event[] = Object.values(useSelector(eventsSelector)).sort(({start: a}, {start: b}) => b - a);
-    const tags = useSelector(tagsSelector);
+    const tagEntities = useSelector(tagsSelector);
+    const eventLinkEntities = useSelector(eventLinkEntitiesSelector);
     const [showEditModal, setShowEditModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<null | number>(null);
@@ -89,6 +92,15 @@ export default function EventsList(): ReactElement {
         setBanner(event.banner);
         setOrganizerLogo(event.organizerLogo);
         setShowEditModal(true);
+        setTags(event.tags.map((tagId) => tagEntities[tagId].name));
+        setLinks(event.links.map((linkId) => {
+            const entity = eventLinkEntities[linkId];
+            return {
+                name: entity.name,
+                linkType: entity.linkType,
+                link: entity.link,
+            }
+        }));
     };
 
     const onDelete = (id: number) => dispatch(deleteEvent(id));
@@ -108,6 +120,8 @@ export default function EventsList(): ReactElement {
     const [disclaimer, setDisclaimer] = useState('');
     const [banner, setBanner] = useState<File | string | null>(null);
     const [organizerLogo, setOrganizerLogo] = useState<File | string | null>(null);
+    const [tags, setTags] = useState<string[]>([]);
+    const [links, setLinks] = useState<Partial<EventLink>[]>([]);
 
     const onPatch = async (): Promise<void> => {
         setLoading(true);
@@ -126,13 +140,15 @@ export default function EventsList(): ReactElement {
             disclaimer,
             banner instanceof File ? banner : null,
             organizerLogo instanceof File ? organizerLogo : null,
+            tags,
+            links
         ));
         setLoading(false);
         setShowEditModal(false);
     };
 
     return <>
-        <Table columns={columns(tags, organizerEntities, onEdit, onDelete, onChangeMainEvent, onChangeFeature)} dataSource={events} rowKey={'id'} />
+        <Table columns={columns(tagEntities, organizerEntities, onEdit, onDelete, onChangeMainEvent, onChangeFeature)} dataSource={events} rowKey={'id'} />
         <Drawer
             title="Edit Event"
             width={1024}
@@ -241,6 +257,26 @@ export default function EventsList(): ReactElement {
                         'list', 'bullet', 'indent',
                         'link', 'image'
                     ]} theme={'snow'} value={disclaimer} onChange={(value) => setDisclaimer(value)}/>
+                </Form.Item>
+
+                <TagsForm tags={tags} setTags={setTags} />
+
+                <Form.Item label='Links'>
+                    {links.map((link, index) => <EditLink 
+                        key={index} 
+                        link={link} 
+                        del={() => setLinks(links.filter((dLink) => dLink.name !== link.name || dLink.linkType !== link.linkType || dLink.link !== link.link))} 
+                        setLink={(linkData) => setLinks(links.map((oldLink, oldIndex) => {
+                            if(index === oldIndex) {
+                                return {...oldLink, ...linkData};
+                            }
+                            return oldLink;
+                        }))}
+                    />)}
+
+                <Button type="dashed" style={{ width: '60%' }} onClick={() => setLinks([...links, {name: '', link: '', linkType: 'custom'}])}>
+                    <Icon type="plus" /> Add link
+                </Button>
                 </Form.Item>
 
                 <Form.Item label="Banner">

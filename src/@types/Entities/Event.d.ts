@@ -4,8 +4,8 @@ export interface EventLink {
     id: number;
     event: number;
     name: string;
-    source: string;
-    type: EventLinkType;
+    link: string;
+    linkType: EventLinkType;
 }
 
 export type EventDescriptionType = 'description' | 'information' | 'advice'; 
@@ -24,7 +24,7 @@ export interface Event {
     descriptionType: EventDescriptionType;
     disclaimer: string;
     tags: number[];
-    links: EventLink[];
+    links: number[];
     banner: string;
     organizerLogo: string;
     isFeatured: boolean;
