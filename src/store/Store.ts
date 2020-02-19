@@ -9,6 +9,7 @@ import { AuthorEntities } from "./Author";
 import { VideoEntities } from "./Video";
 import { OrganizerEntities } from "./Organizer";
 import { EventEntities } from "./Events";
+import { NewsEntities } from "./News";
 
 export interface State {
     entities: {
@@ -16,6 +17,7 @@ export interface State {
         author: AuthorEntities;
         event: EventEntities;
         organizer: OrganizerEntities;
+        news: NewsEntities;
         role: RoleEntities;
         right: RightEntities;
         tag: TagEntities;
