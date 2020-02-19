@@ -25,10 +25,12 @@ import { getDefaultHeader } from './middleware/Network';
 import { EventLink, Event } from '../@types/Entities/Event';
 import { tag } from './Tag';
 import { organizer } from './Organizer';
+import { eventLinks } from './EventLinks';
 
 export const event = new schema.Entity('event', {
     organizer: organizer,
-    tags: [tag]
+    tags: [tag],
+    links: [eventLinks]
 });
 
 export interface EventEntities {
@@ -141,7 +143,9 @@ export function patchEvent(
     descType?: string,
     disclaimer?: string,
     banner?: File | null,
-    organizerLogo?: File | null
+    organizerLogo?: File | null,
+    tags?: string[],
+    links?: Partial<EventLink>[],
 ): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
@@ -158,6 +162,10 @@ export function patchEvent(
         disclaimer && data.set('disclaimer', disclaimer);
         banner && data.set('banner', banner);
         organizerLogo && data.set('organizerLogo', organizerLogo);
+        //@ts-ignore
+        tags.length > 0 ? tags.forEach((tag) => data.append('tags', tag)) : data.append('tags', []);
+        //@ts-ignore
+        links.length > 0 ? links.forEach((link) => data.append('links', JSON.stringify(link))) : data.append('links', []);
         
         await dispatch<Promise<Response>>({
             [CALL_API]: {

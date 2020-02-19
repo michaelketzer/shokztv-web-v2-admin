@@ -10,12 +10,14 @@ import { VideoEntities } from "./Video";
 import { OrganizerEntities } from "./Organizer";
 import { EventEntities } from "./Events";
 import { NewsEntities } from "./News";
+import { EventLinkEntities } from "./EventLinks";
 
 export interface State {
     entities: {
         article: ArticleEntities;
         author: AuthorEntities;
         event: EventEntities;
+        eventLinks: EventLinkEntities;
         organizer: OrganizerEntities;
         news: NewsEntities;
         role: RoleEntities;

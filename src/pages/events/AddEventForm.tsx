@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect, useMemo } from 'react';
-import { Form, Input, Select, DatePicker, Button, Icon } from 'antd';
+import { Form, Input, Select, DatePicker, Button, Icon, Row, Col, Popconfirm } from 'antd';
 const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,22 +30,33 @@ interface Props {
     closeCallback?: () => void;
 }
 
-function EditLink({link, setLink}: {link: Partial<EventLink>; setLink: (l: Partial<EventLink>) => void}): ReactElement {
-    return <Form layout={'inline'}>
-        <Form.Item>
-            <Input value={link.name} onChange={(e) => setLink({name: e.target.value})} />
-        </Form.Item>
-        <Form.Item>
-            <Select style={{ width: '200px' }} value={link.type} onChange={(value) => setLink({type: value})}>
-                <Select.Option value={'homepage'}>Homepage</Select.Option>
-                <Select.Option value={'liquipedia'}>Liquipedia</Select.Option>
-                <Select.Option value={'custom'}>Other</Select.Option>
-            </Select>
-        </Form.Item>
-        <Form.Item>
-            <Input value={link.source} onChange={(e) => setLink({source: e.target.value})} />
-        </Form.Item>
-    </Form>;
+export function EditLink({link, setLink, del}: {link: Partial<EventLink>; setLink: (l: Partial<EventLink>) => void; del: () => void}): ReactElement {
+    return <Row gutter={[20, 0]} align={'middle'}>
+        <Col span={7}>
+            <Form.Item>
+                <Input placeholder={'Name'} value={link.name} onChange={(e) => setLink({name: e.target.value})} />
+            </Form.Item>
+        </Col>
+        <Col span={7}>
+            <Form.Item>
+                <Select value={link.linkType} onChange={(value) => setLink({linkType: value})}>
+                    <Select.Option value={'homepage'}>Homepage</Select.Option>
+                    <Select.Option value={'liquipedia'}>Liquipedia</Select.Option>
+                    <Select.Option value={'custom'}>Other</Select.Option>
+                </Select>
+            </Form.Item>
+        </Col>
+        <Col span={7}>
+            <Form.Item>
+                <Input placeholder={'Link'} value={link.link} onChange={(e) => setLink({link: e.target.value})} />
+            </Form.Item>
+        </Col>
+        <Col span={1}>
+            <Popconfirm title="Sure to remove link?" onConfirm={del}>
+                <Icon type="delete" />
+            </Popconfirm>
+        </Col>
+    </Row>;
 }
 
 export default function AddEventForm({closeCallback = () => {}}: Props): ReactElement {
@@ -222,14 +233,18 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
         <TagsForm tags={tags} setTags={setTags} />
 
         <Form.Item label='Links'>
-            {links.map((link, index) => <EditLink link={link} setLink={(linkData) => setLinks(links.map((oldLink, oldIndex) => {
+            {links.map((link, index) => <EditLink 
+            key={index} 
+            del={() => setLinks(links.filter((dLink) => dLink.name !== link.name || dLink.linkType !== link.linkType || dLink.link !== link.link))} 
+            link={link} 
+            setLink={(linkData) => setLinks(links.map((oldLink, oldIndex) => {
                 if(index === oldIndex) {
                     return {...oldLink, ...linkData};
                 }
                 return oldLink;
             }))}/>)}
 
-          <Button type="dashed" style={{ width: '60%' }} onClick={() => setLinks([...links, {name: '', source: '', type: 'custom'}])}>
+          <Button type="dashed" style={{ width: '60%' }} onClick={() => setLinks([...links, {name: '', link: '', linkType: 'custom'}])}>
             <Icon type="plus" /> Add link
           </Button>
         </Form.Item>
