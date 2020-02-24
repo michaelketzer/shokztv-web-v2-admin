@@ -1,12 +1,11 @@
 import React, { ReactElement, useState } from 'react';
 import { Form, Input, Button } from 'antd';
-const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
-import 'react-quill/dist/quill.snow.css';
 import { createArticle } from '../../store/Article';
 import Router from 'next/router';
 import TagsForm from '../components/TagsForm';
 import { useDispatch } from 'react-redux';
 import FileForm from '../components/FileForm';
+import TextEditor from '../components/TextEditor';
 
 const formItemLayout = {
     labelCol: {
@@ -55,19 +54,7 @@ export default function AddArticleForm(): ReactElement {
         <TagsForm tags={tags} setTags={setTags} />
 
         <Form.Item label="Body">
-            <ReactQuill style={{background: '#FFF'}} modules={{
-                toolbar: [
-                    [{ 'header': [1, 2, false] }],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                    ['link', 'image'],
-                ],
-            }} formats={[
-                'header',
-                'bold', 'italic', 'underline', 'strike', 'blockquote',
-                'list', 'bullet', 'indent',
-                'link', 'image'
-              ]} theme={'snow'} value={body} onChange={(value) => setBody(value)} />
+            <TextEditor text={body} setText={setBody} />
         </Form.Item>
 
         <Form.Item label="Cover Image">
@@ -79,17 +66,5 @@ export default function AddArticleForm(): ReactElement {
                 Create
             </Button>
         </Form.Item>
-        
-        <style jsx global>{`
-            .ql-toolbar.ql-snow {
-                padding: 0px!important;
-            }
-            .ql-snow .ql-picker.ql-header .ql-picker-label::before {
-                position: absolute;
-            }
-            .ql-editor {
-                min-height: 130px;
-            }
-        `}</style>
     </Form>;
 }
