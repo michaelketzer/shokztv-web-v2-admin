@@ -1,13 +1,12 @@
-import React, { ReactElement, useState, useMemo, useEffect } from 'react';
-import { Form, Input, Icon, Tag, AutoComplete, Button } from 'antd';
-const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
-import 'react-quill/dist/quill.snow.css';
+import React, { ReactElement, useState, useEffect } from 'react';
+import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../../store/selectors/tag';
 import { Article, patchArticle } from '../../store/Article';
 import { loadTags } from '../../store/Tag';
 import Router from 'next/router';
 import TagsForm from '../components/TagsForm';
+import TextEditor from '../components/TextEditor';
 
 const formItemLayout = {
     labelCol: {
@@ -60,19 +59,7 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
         <TagsForm tags={tags} setTags={setTags} />
 
         <Form.Item label="Body">
-            <ReactQuill style={{background: '#FFF'}} modules={{
-                toolbar: [
-                    [{ 'header': [1, 2, false] }],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-                    ['link', 'image'],
-                ],
-            }} formats={[
-                'header',
-                'bold', 'italic', 'underline', 'strike', 'blockquote',
-                'list', 'bullet', 'indent',
-                'link', 'image'
-              ]} theme={'snow'} value={body} onChange={(value) => setBody(value)} />
+            <TextEditor text={body} setText={setBody} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
@@ -80,14 +67,5 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
                 Save
             </Button>
         </Form.Item>
-        
-        <style jsx global>{`
-            .ql-toolbar.ql-snow {
-                padding: 0px!important;
-            }
-            .ql-snow .ql-picker.ql-header .ql-picker-label::before {
-                position: absolute;
-            }
-        `}</style>
     </Form>;
 }

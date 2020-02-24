@@ -11,13 +11,12 @@ import { tagsSelector } from "../../store/selectors/tag";
 import ButtonGroup from "antd/lib/button/button-group";
 import FileForm from "../components/FileForm";
 import { loadOrganizer, OrganizerEntities } from "../../store/Organizer";
-const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
-import 'react-quill/dist/quill.snow.css';
 import { getCodeList } from 'country-list';
 import { organizerSelector } from "../../store/selectors/organizer";
 import moment from 'moment';
 import TagsForm from "../components/TagsForm";
 import { EditLink } from './AddEventForm';
+import TextEditor from "../components/TextEditor";
 
 const dateFormat = 'DD.MM.YYYY';
 
@@ -228,35 +227,11 @@ export default function EventsList(): ReactElement {
                 </Form.Item>
 
                 <Form.Item label="Description">
-                    <ReactQuill style={{background: '#FFF'}} modules={{
-                        toolbar: [
-                            [{ 'header': [1, 2, false] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [{'list': 'ordered'}, {'list': 'bullet'}],
-                            ['link', 'image'],
-                        ],
-                    }} formats={[
-                        'header',
-                        'bold', 'italic', 'underline', 'strike', 'blockquote',
-                        'list', 'bullet', 'indent',
-                        'link', 'image'
-                    ]} theme={'snow'} value={description} onChange={(value) => setDescription(value)} />
+                    <TextEditor text={description} setText={setDescription} />
                 </Form.Item>
 
                 <Form.Item label="Disclaimer">
-                    <ReactQuill style={{background: '#FFF'}} modules={{
-                        toolbar: [
-                            [{ 'header': [1, 2, false] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [{'list': 'ordered'}, {'list': 'bullet'}],
-                            ['link', 'image'],
-                        ],
-                    }} formats={[
-                        'header',
-                        'bold', 'italic', 'underline', 'strike', 'blockquote',
-                        'list', 'bullet', 'indent',
-                        'link', 'image'
-                    ]} theme={'snow'} value={disclaimer} onChange={(value) => setDisclaimer(value)}/>
+                    <TextEditor text={disclaimer} setText={setDisclaimer} />
                 </Form.Item>
 
                 <TagsForm tags={tags} setTags={setTags} />
