@@ -36,7 +36,17 @@ const columns = (tags: TagEntities, organizer: OrganizerEntities, onEdit: (recor
     { title: 'Date', key: 'date', render: (text, record) =>  dayjs.unix(record.start).format('DD.MM.') + ' - ' + dayjs.unix(record.end).format('DD.MM.YYYY')},
     { title: 'Organizer', key: 'organizer', render: (text, record) =>  <>{organizer[record.organizer] ? organizer[record.organizer].name : ''}</>},
     { title: 'Location', key: 'location', render: (text, record) =>  <>
-        {record.country.length > 0 ? <><ReactCountryFlag countryCode={record.country} svg /> {record.location}</> : <></>}
+        {record.country.length > 0 ? <>{record.country === 'xx' ? <div className={'onlineFlag'} /> : <ReactCountryFlag countryCode={record.country} svg />} {record.location}</> : <></>}
+
+        <style jsx>{`
+            .onlineFlag {
+                width: 14px;
+                height: 12px;
+                background-color: #BBB;
+                display: inline-block;
+                vertical-align: -.1em;
+            } 
+        `}</style>
     </>},
     { title: 'Price pool', dataIndex: 'pricePool', key: 'pricePool' },
     { title: 'Tags', key: 'tags', render: (text, record) =>  <>
@@ -68,7 +78,9 @@ export default function EventsList(): ReactElement {
     const [editId, setEditId] = useState<null | number>(null);
     const organizerEntities = useSelector(organizerSelector);
     const organizerOptions = useMemo(() => Object.values(organizerEntities), [organizerEntities]);
-    const countryList = useMemo(() => Object.entries(getCodeList()).map(([code, name]) => ({code, name})).sort(({name: a}, {name: b}) =>  b > a ? 1 : 0), []);
+    const countryList = useMemo(() => Object.entries(getCodeList()).map(([code, name]) => ({code, name}))
+                                                                   .concat([{code: 'eu', name: 'Europe'}, {code: 'xx', name: 'Online'}])
+                                                                   .sort(({name: a}, {name: b}) =>  b > a ? 1 : 0), []);
 
     useEffect(() => {
         dispatch(loadOrganizer());
@@ -201,7 +213,7 @@ export default function EventsList(): ReactElement {
                         filterOption={(input, option) => (option.props.children[2] as string).toLowerCase().indexOf(input.toLowerCase()) >= 0}
                     >
                         {countryList.map(({code, name}) => <Select.Option key={code} value={code}>
-                            <ReactCountryFlag countryCode={code} svg /> {name}
+                            {code === 'xx' ? <div className={'onlineFlag'} /> : <ReactCountryFlag countryCode={code} svg />}  {name}
                         </Select.Option>)}
                     </Select>
                 </Form.Item>
@@ -276,6 +288,14 @@ export default function EventsList(): ReactElement {
             }
             .ql-editor {
                 min-height: 130px;
+            }
+
+            .onlineFlag {
+                width: 14px;
+                height: 12px;
+                background-color: #BBB;
+                display: inline-block;
+                vertical-align: -.1em;
             }
         `}</style>
     </>;
