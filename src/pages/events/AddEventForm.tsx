@@ -68,7 +68,9 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
         dispatch(loadOrganizer());
     }, [])
 
-    const countryList = useMemo(() => Object.entries(getCodeList()).map(([code, name]) => ({code, name})).sort(({name: a}, {name: b}) =>  b > a ? 1 : 0), []);
+    const countryList = useMemo(() => Object.entries(getCodeList()).map(([code, name]) => ({code, name}))
+                                                                   .concat([{code: 'eu', name: 'Europe'}, {code: 'xx', name: 'Online'}])
+                                                                   .sort(({name: a}, {name: b}) =>  b > a ? 1 : 0), []);
 
     const [name, setName] = useState('');
     const [organizer, setOrganizer] = useState<number | null>(null);
@@ -172,7 +174,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                 filterOption={(input, option) => (option.props.children[2] as string).toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
                 {countryList.map(({code, name}) => <Select.Option key={code} value={code}>
-                    <ReactCountryFlag countryCode={code} svg /> {name}
+                    {code === 'xx' ? <div className={'onlineFlag'} /> : <ReactCountryFlag countryCode={code} svg />}  {name}
                 </Select.Option>)}
             </Select>
         </Form.Item>
@@ -235,5 +237,15 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
         <Button type={'primary'} onClick={onCreate} loading={loading}>
             <Icon type="calendar" /> Event erstellen
         </Button>
+
+        <style jsx>{`
+            .onlineFlag {
+                width: 14px;
+                height: 12px;
+                background-color: #BBB;
+                display: inline-block;
+                vertical-align: -.1em;
+            }    
+        `}</style>
     </Form>;
 }
