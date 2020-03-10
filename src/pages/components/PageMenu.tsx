@@ -1,4 +1,5 @@
-import { Menu, Icon } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Menu } from 'antd';
 import { ReactElement, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
@@ -50,14 +51,16 @@ export default function PageMenu(): ReactElement {
     const router = useRouter();
     const rightsCheck = useRights(true);
     
-    return <Menu selectedKeys={[router.pathname]} mode="horizontal" theme={'dark'}>
-        {pages.filter(({rights}) => rightsCheck(rights)).map(({path, name, icon}) => <Menu.Item key={path}>
-            <Link href={path}>
-                <div>
-                    <Icon type={icon} />
-                    {name}
-                </div>
-            </Link>
-        </Menu.Item>)}
-  </Menu>;
+    return (
+        <Menu selectedKeys={[router.pathname]} mode="horizontal" theme={'dark'}>
+            {pages.filter(({rights}) => rightsCheck(rights)).map(({path, name, icon}) => <Menu.Item key={path}>
+                <Link href={path}>
+                    <div>
+                        <LegacyIcon type={icon} />
+                        {name}
+                    </div>
+                </Link>
+            </Menu.Item>)}
+      </Menu>
+    );
 }

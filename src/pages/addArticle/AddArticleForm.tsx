@@ -1,5 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button } from 'antd';
 import { createArticle } from '../../store/Article';
 import Router from 'next/router';
 import TagsForm from '../components/TagsForm';

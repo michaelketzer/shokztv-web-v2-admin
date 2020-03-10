@@ -2,7 +2,10 @@ import { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadOrganizer, patchOrganizer, deleteOrganizer } from "../../store/Organizer";
 import { organizerSelector } from "../../store/selectors/organizer";
-import { Table, Button, Popconfirm, Modal, Form, Input } from "antd";
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Table, Button, Popconfirm, Modal, Input } from "antd";
 import ButtonGroup from "antd/lib/button/button-group";
 import FileForm from "../components/FileForm";
 
@@ -34,9 +37,9 @@ const getColumns = (onDelete: (id: number) => Promise<void>, onEdit: (id: number
     title: '',
     key: 'actions',
     render: (text, record) => <ButtonGroup>
-      <Button icon='edit' onClick={() => onEdit(record.id)} />
+      <Button icon={<EditOutlined />} onClick={() => onEdit(record.id)} />
       <Popconfirm title="Sure to delete?" onConfirm={() => this.onDelete(record.id)} disabled={record.events > 0}>
-        <Button type="danger" icon='delete' disabled={record.events > 0} />
+        <Button type="danger" icon={<DeleteOutlined />} disabled={record.events > 0} />
       </Popconfirm>
     </ButtonGroup>,
   },

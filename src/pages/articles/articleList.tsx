@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
-import { List, Avatar, Icon } from "antd";
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { List, Avatar } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { articlesSelector } from "../../store/selectors/article";
 import { Article, publishArticle, unpublishArticle } from "../../store/Article";
@@ -12,11 +13,11 @@ import Paragraph from "antd/lib/typography/Paragraph";
 
 const IconText = ({ type, text }) => (
     <span>
-      <Icon type={type} style={{ marginRight: 8 }} />
+      <LegacyIcon type={type} style={{ marginRight: 8 }} />
       {text}
     </span>
   );
-  
+
 
 export default function ArticleList(): ReactElement {
     const articles: Article[] = Object.values(useSelector(articlesSelector)).sort(({created: a}, {created: b}) => b - a);
