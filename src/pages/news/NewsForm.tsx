@@ -39,7 +39,7 @@ export default function NewsForm({data, setData, loading, save}: Props): ReactEl
         <Form.Item label="Headline">
             <Input style={{ width: '100%' }} value={data.headline} onChange={(e) => setData({...data, headline: e.target.value})} />
         </Form.Item>
-        <Form.Item label="Description">
+        <Form.Item label="Beschreibung">
             <TextArea style={{ width: '100%' }} value={data.description} onChange={(e) => setData({...data, description: e.target.value})} />
         </Form.Item>
         <Form.Item label="Source">
@@ -48,7 +48,7 @@ export default function NewsForm({data, setData, loading, save}: Props): ReactEl
 
         <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit" onClick={save} loading={loading}>
-                Save
+                Speichern
             </Button>
         </Form.Item>
     </Form>;

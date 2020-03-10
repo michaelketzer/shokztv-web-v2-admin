@@ -48,23 +48,23 @@ export default function AddArticleForm(): ReactElement {
     };
 
     return <Form {...formItemLayout}>
-        <Form.Item label="Title">
+        <Form.Item label="Titel">
            <Input style={{ width: '100%' }} value={title} onChange={(e) => setTitle(e.target.value)} />
         </Form.Item>
         
         <TagsForm tags={tags} setTags={setTags} />
 
-        <Form.Item label="Body">
+        <Form.Item label="Inhalt">
             <TextEditor text={body} setText={setBody} />
         </Form.Item>
 
-        <Form.Item label="Cover Image">
+        <Form.Item label="Cover Bild">
             <FileForm file={image} setFile={setImage} label={'Cover'} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit" onClick={create} loading={loading}>
-                Create
+                Erstellen
             </Button>
         </Form.Item>
     </Form>;

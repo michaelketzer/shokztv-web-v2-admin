@@ -64,25 +64,25 @@ export default function TagList(): ReactElement {
             {tags.map(({id, name, description, image}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
                 <Card
                     actions={[
-                        ...(!image ? [<div onClick={() => onAddImage(id)}><PictureOutlined /> Image</div>] : []),
-                        <div onClick={() => onEdit(id, name, description)}><EditOutlined /> Edit</div>,
-                        <div onClick={() => dispatch(deleteTag(id))}><DeleteOutlined /> Delete</div>,
+                        ...(!image ? [<div onClick={() => onAddImage(id)}><PictureOutlined /> Bild</div>] : []),
+                        <div onClick={() => onEdit(id, name, description)}><EditOutlined /> Editieren</div>,
+                        <div onClick={() => dispatch(deleteTag(id))}><DeleteOutlined /> Löschen</div>,
                     ]} 
                     cover={<img alt={`tag-${name}`} src={`${process.env.API_URL}${image}`} height={200} style={{objectFit: 'cover'}}/>}>
                     <Card.Meta title={name} description={description || ' '} />
                 </Card>
             </Col>)}
 
-            <Modal title="Add tag image" visible={showImageModal} onOk={onPatchImage} onCancel={() => setImageShowModal(false)} confirmLoading={loading}>
+            <Modal title="Neues Bild" visible={showImageModal} onOk={onPatchImage} onCancel={() => setImageShowModal(false)} confirmLoading={loading}>
                 <FileForm file={image} setFile={setImage} label={'Tag Image'} />
             </Modal>
 
-            <Modal title="Edit tag" visible={showEditModal} onOk={onPatchTag} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
+            <Modal title="Tag bearbeiten" visible={showEditModal} onOk={onPatchTag} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
                 <Form layout={'vertical'}>
                     <Form.Item label={'Name'}>
                         <Input id="name" type="text" value={name} onChange={({target}) => setName(target.value)}/>
                     </Form.Item>
-                    <Form.Item label={'Description'}>
+                    <Form.Item label={'Beschreibung'}>
                         <TextArea id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
                     </Form.Item>
                 </Form>

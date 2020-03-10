@@ -21,16 +21,16 @@ export default function AddRole(): ReactElement {
 
   return <Row justify="start">
     <Button type="primary" onClick={() => setShowModal(true)}>
-          Add Role
+          Neue Rolle
         </Button>
         <Modal
-          title="New Role"
+          title="Neue Rolle"
           visible={showModal}
           onOk={onCreate}
           onCancel={() => setShowModal(false)}
           confirmLoading={loading}
         >
-            <Input placeholder="Role name" 
+            <Input placeholder="Name" 
                    value={roleName} 
                    disabled={loading}
                    onChange={(e) => setRoleName(e.target.value)}

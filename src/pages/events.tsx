@@ -20,7 +20,7 @@ export default function Events(): ReactElement {
         <Content style={{ padding: '50px', overflowY: 'scroll'}}>
             <div>
                 <Button type="primary" onClick={() => setShowAddForm(true)}>
-                    Add Event
+                    Neues Event
                 </Button>
 
                 <Drawer
@@ -32,7 +32,7 @@ export default function Events(): ReactElement {
                 >
                     <Link href={'/addEvent'}>
                         <Button type="primary">
-                            Open as page
+                            Als Seite öffnen
                         </Button>
                     </Link>
                     <AddEventForm closeCallback={() => setShowAddForm(false)}/>

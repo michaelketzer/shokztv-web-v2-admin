@@ -26,10 +26,10 @@ export default function AddVideo(): ReactElement {
 
   return <Row justify="start">
     <Button type="primary" onClick={() => setShowModal(true)}>
-        Add Video
+        Neues Video
     </Button>
     <Modal
-        title="New Video"
+        title="Neues Video"
         visible={showModal}
         onOk={onCreate}
         onCancel={() => setShowModal(false)}
@@ -43,7 +43,7 @@ export default function AddVideo(): ReactElement {
 
         <div style={{margin: '10px 0'}} />
 
-        <Input placeholder="VOD Url (only twitch)" 
+        <Input placeholder="VOD" 
                 value={source} 
                 disabled={loading}
                 onChange={(e) => setSource(e.target.value)}
