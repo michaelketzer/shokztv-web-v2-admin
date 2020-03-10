@@ -13,7 +13,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/moment": "^2.13.0",
     "@types/normalizr": "^2.0.18",
-    "antd": "^3.26.6",
+    "antd": "4.0.2",
     "asmcrypto-lite": "^1.1.0",
     "country-list": "^2.2.0",
     "dayjs": "^1.8.19",
@@ -21,8 +21,7 @@
     "is-plain-object": "^3.0.0",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
-    "next": "^9.1.7",
+    "next": "9.2.2",
     "next-redux-wrapper": "^4.0.1",
     "normalizr": "^3.4.1",
     "react": "^16.12.0",
@@ -50,7 +49,6 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/reselect": "^2.2.0",
     "@types/styled-jsx": "^2.2.8",
-    "@zeit/next-css": "^1.0.1",
     "typescript": "^3.7.4"
   }
 }
