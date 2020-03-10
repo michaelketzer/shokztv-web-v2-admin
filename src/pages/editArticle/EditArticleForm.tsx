@@ -1,6 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../../store/selectors/tag';
@@ -66,7 +65,7 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
 
         <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit" onClick={save} loading={loading}>
-                Save
+                Speichern
             </Button>
         </Form.Item>
     </Form>;

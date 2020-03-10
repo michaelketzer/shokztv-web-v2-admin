@@ -27,7 +27,7 @@ export default function Articles(): ReactElement {
         <Content style={{ padding: '50px', overflowY: 'scroll'}}>
             <div>
                 <Button type="primary" onClick={() => setShowAddForm(true)}>
-                    Add Article
+                    Neuer Artikel
                 </Button>
                 <Drawer
                     title="Create new article"
@@ -38,7 +38,7 @@ export default function Articles(): ReactElement {
                 >
                     <Link href={'/addArticle'}>
                         <Button type="primary">
-                            Open as page
+                            Als Seite öffnen
                         </Button>
                     </Link>
                     <AddArticleForm />

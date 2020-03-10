@@ -8,7 +8,7 @@ const { Header, Content } = Layout;
 export default function AddArticle(): ReactElement {
     return <Layout className="layout" style={{ height: '100vh' }}>
         <Head>
-            <title>New article</title>
+            <title>Neuer Artikel</title>
             <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
 

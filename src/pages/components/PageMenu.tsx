@@ -22,7 +22,7 @@ const pages = [{
     rights: ['ARTICLE_CREATE', 'ARTICLE_EDIT', 'ARTICLE_DELETE', 'VIDEO_CREATE', 'VIDEO_EDIT', 'VIDEO_DELETE', 'EVENTS_CREATE', 'EVENT_EDIT', 'EVENT_DELETE'],
 }, {
     icon: <FileTextOutlined />,
-    name: 'Articles',
+    name: 'Artikel',
     path: '/articles',
     rights: ['ARTICLE_CREATE', 'ARTICLE_EDIT', 'ARTICLE_DELETE'],
 }, {
@@ -32,7 +32,7 @@ const pages = [{
     rights: ['VIDEO_CREATE', 'VIDEO_EDIT', 'VIDEO_DELETE'],
 }, {
     icon: <IdcardOutlined />,
-    name: 'Organizer',
+    name: 'Veranstalter',
     path: '/organizer',
     rights: ['ORGANIZER_CREATE', 'ORGANIZER_EDIT', 'ORGANIZER_DELETE'],
 }, {

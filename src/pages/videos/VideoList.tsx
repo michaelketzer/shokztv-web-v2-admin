@@ -58,7 +58,7 @@ export default function VideoList(): ReactElement {
                 </Col>)}
             </Row>
 
-            <Modal title="Edit video" visible={showEditModal} onOk={onPatchVideo} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
+            <Modal title="Video bearbeiten" visible={showEditModal} onOk={onPatchVideo} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
                 <Input id="name" type="text" value={title} onChange={({target}) => setTitle(target.value)}/>
             </Modal>
         </>

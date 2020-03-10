@@ -26,16 +26,16 @@ export default function AddOrganizer(): ReactElement {
 
   return <Row justify="start">
     <Button type="primary" onClick={() => setShowModal(true)}>
-        Add Organizer
+        Neuer Veranstalter
     </Button>
     <Modal
-        title="Add Organizer"
+        title="Neuer Veranstalter"
         visible={showModal}
         onOk={onCreate}
         onCancel={() => setShowModal(false)}
         confirmLoading={loading}
     >
-      <Input placeholder="Organizer Name" 
+      <Input placeholder="Name" 
               value={name} 
               disabled={loading}
               onChange={(e) => setName(e.target.value)}

@@ -7,7 +7,7 @@ interface Props {
   setFile: (file: File) => void;
 }
 
-export default function FileForm({label = 'Upload', file, setFile}: Props): ReactElement {
+export default function FileForm({label = 'Hochladen', file, setFile}: Props): ReactElement {
   const src = useMemo(() => {
     if(file instanceof File) {
       return URL.createObjectURL(file);

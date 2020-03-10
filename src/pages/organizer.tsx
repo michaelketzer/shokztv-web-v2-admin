@@ -10,7 +10,7 @@ const { Header, Content } = Layout;
 export default function Organizer(): ReactElement {
   return <Layout className="layout" style={{ height: '100vh' }}>
     <Head>
-      <title>Organizer</title>
+      <title>Veranstalter</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 

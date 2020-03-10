@@ -60,7 +60,7 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
             )}
             {!tagInput && (
             <Tag onClick={() => setTagInput(true)} style={{ background: '#fff', borderStyle: 'dashed' }}>
-                <PlusOutlined /> New Tag
+                <PlusOutlined /> Neuer Tag
             </Tag>
             )}
         </Form.Item>

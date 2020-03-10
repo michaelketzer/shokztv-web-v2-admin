@@ -76,7 +76,7 @@ export default function News(): ReactElement {
     <Content style={{ padding: '50px', overflowY: 'scroll' }}>
         <div>
             <Button type="primary" onClick={() => setShowDrawer(true)}>
-                Add News
+              Neue News
             </Button>
 
             <Divider />
@@ -84,7 +84,7 @@ export default function News(): ReactElement {
             <Table dataSource={news} columns={columns(onEdit, onDelete)} rowKey={'id'}/>
 
             <Drawer
-              title={(id ? 'Edit' : 'Add') + " News"}
+              title={(id ? 'News bearbeiten' : 'Neue News')}
               width={600}
               onClose={() => setShowDrawer(false)}
               visible={showDrawer}

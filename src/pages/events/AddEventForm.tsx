@@ -137,7 +137,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                 <Input style={{ width: '100%' }} value={name} onChange={(e) => setName(e.target.value)} />
             </Form.Item>
             
-            <Form.Item label="Organizer">
+            <Form.Item label="Veranstalter">
                 <Select 
                     style={{ width: '100%' }} 
                     loading={organizerOptions.length === 0} 
@@ -153,11 +153,11 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                 </Select>
             </Form.Item>
             
-            <Form.Item label="Short description">
+            <Form.Item label="Kurzbeschreibung">
                 <Input.TextArea style={{ width: '100%' }} value={shortDescription} onChange={(e) => setShortDescription(e.target.value)} />
             </Form.Item>
 
-            <Form.Item label={'Date'}>
+            <Form.Item label={'Datum'}>
                 <DatePicker.RangePicker 
                     //@ts-ignore
                     defaultValue={[start ? dayjs.unix(start) : null, end ? dayjs.unix(end) : null]}
@@ -169,7 +169,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                 />
             </Form.Item>
             
-            <Form.Item label="Country">
+            <Form.Item label="Land">
                 <Select 
                     style={{ width: '100%' }} 
                     value={country} 
@@ -184,27 +184,27 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                 </Select>
             </Form.Item>
 
-            <Form.Item label="Location">
+            <Form.Item label="Ort">
                 <Input style={{ width: '100%' }} value={location} onChange={(e) => setLocation(e.target.value)} />
             </Form.Item>
 
-            <Form.Item label="Price pool">
+            <Form.Item label="Preispool">
                 <Input style={{ width: '100%' }} value={pricePool} onChange={(e) => setPricePool(e.target.value)} />
             </Form.Item>
             
-            <Form.Item label="Description Type">
+            <Form.Item label="Beschreibungstyp">
                 <Select 
                     style={{ width: '100%' }} 
                     value={descType} 
                     onChange={(value) => setDescType(value)} 
                 >
-                    <Select.Option value={'description'}>Description</Select.Option>
+                    <Select.Option value={'description'}>Beschreibung</Select.Option>
                     <Select.Option value={'information'}>Information</Select.Option>
-                    <Select.Option value={'advice'}>Advice</Select.Option>
+                    <Select.Option value={'advice'}>Hinweis</Select.Option>
                 </Select>
             </Form.Item>
 
-            <Form.Item label="Description">
+            <Form.Item label="Beschreibung">
                 <TextEditor text={description} setText={setDescription} />
             </Form.Item>
 
@@ -235,7 +235,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                 <FileForm file={banner} setFile={setBanner} />
             </Form.Item>
 
-            <Form.Item label="Organizer Event Logo">
+            <Form.Item label="Veranstatler Logo">
                 <FileForm file={organizerLogo} setFile={setOrganizerLogo} />
             </Form.Item>
 

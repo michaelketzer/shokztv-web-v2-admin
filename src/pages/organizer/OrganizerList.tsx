@@ -86,7 +86,7 @@ export default function OrganizerList(): ReactElement {
 
     return <>
       <Table dataSource={organizers} columns={columns} rowKey={'id'}/>
-      <Modal title="Edit organizer" visible={showModal} onOk={onPatch} onCancel={() => setShowModal(false)} confirmLoading={loading}>
+      <Modal title="Veranstalter bearbeiten" visible={showModal} onOk={onPatch} onCancel={() => setShowModal(false)} confirmLoading={loading}>
         <Form layout={'vertical'}>
           <Form.Item label={'Name'}>
               <Input id="name" type="text" value={name} onChange={({target}) => setName(target.value)}/>

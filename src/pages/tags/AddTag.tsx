@@ -27,7 +27,7 @@ export default function AddTag(): ReactElement {
 
   return <Row justify="start">
     <Button type="primary" onClick={() => setShowModal(true)}>
-        Add Tag
+        Neuer Tag
     </Button>
     <Modal
         title="Neuer Tag"
@@ -36,7 +36,7 @@ export default function AddTag(): ReactElement {
         onCancel={() => setShowModal(false)}
         confirmLoading={loading}
     >
-        <Input placeholder="Tag Name" 
+        <Input placeholder="Name" 
                 value={tagName} 
                 disabled={loading}
                 onChange={(e) => setTagName(e.target.value)}
@@ -44,11 +44,11 @@ export default function AddTag(): ReactElement {
 
         <div style={{margin: '10px 0'}} />
 
-        <TextArea placeholder={'Description'} id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
+        <TextArea placeholder={'Beschreibung'} id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
 
         <div style={{margin: '10px 0'}} />
 
-        <FileForm file={image} setFile={setImage} label={'Tag Image'} />
+        <FileForm file={image} setFile={setImage} label={'Bild'} />
     </Modal>
   </Row>;
 }

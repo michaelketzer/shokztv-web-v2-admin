@@ -38,7 +38,7 @@ export default function ArticleList(): ReactElement {
                 extra={<img width={512} alt="logo" src={`${process.env.API_URL}${item.cover}`}/>}
                 actions={[
                     <Link href={`/editArticle/${item.id}`}><div><EditFilled />Editieren</div></Link>,
-                    <div onClick={() => togglePublishStatus(item.id, item.status)}><GlobalOutlined />{item.status !== 'published' ? 'Publish' : 'Unpublish'}</div>,
+                    <div onClick={() => togglePublishStatus(item.id, item.status)}><GlobalOutlined />{item.status !== 'published' ? 'Veröffentlichen' : 'Veröffentlichung zurückziehen'}</div>,
                 ]}
             >
                 <List.Item.Meta
