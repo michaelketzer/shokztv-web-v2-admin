@@ -1,5 +1,8 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Row, Col, Card, Icon, Modal, Input, Form } from "antd";
+import { DeleteOutlined, EditOutlined, PictureOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Card, Modal, Input } from "antd";
 import { loadTags, deleteTag, patchTag } from "../../store/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { tagsSelector } from "../../store/selectors/tag";
@@ -57,32 +60,34 @@ export default function TagList(): ReactElement {
         setShowEditModal(false);
     };
 
-    return <Row type="flex" justify="start" gutter={[16, 16]}>
-        {tags.map(({id, name, description, image}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
-            <Card
-                actions={[
-                    ...(!image ? [<div onClick={() => onAddImage(id)}><Icon type="picture" /> Image</div>] : []),
-                    <div onClick={() => onEdit(id, name, description)}><Icon type="edit" /> Edit</div>,
-                    <div onClick={() => dispatch(deleteTag(id))}><Icon type="delete" /> Delete</div>,
-                ]} 
-                cover={<img alt={`tag-${name}`} src={`${process.env.API_URL}${image}`} height={200} style={{objectFit: 'cover'}}/>}>
-                <Card.Meta title={name} description={description || ' '} />
-            </Card>
-        </Col>)}
+    return (
+        <Row type="flex" justify="start" gutter={[16, 16]}>
+            {tags.map(({id, name, description, image}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
+                <Card
+                    actions={[
+                        ...(!image ? [<div onClick={() => onAddImage(id)}><PictureOutlined /> Image</div>] : []),
+                        <div onClick={() => onEdit(id, name, description)}><EditOutlined /> Edit</div>,
+                        <div onClick={() => dispatch(deleteTag(id))}><DeleteOutlined /> Delete</div>,
+                    ]} 
+                    cover={<img alt={`tag-${name}`} src={`${process.env.API_URL}${image}`} height={200} style={{objectFit: 'cover'}}/>}>
+                    <Card.Meta title={name} description={description || ' '} />
+                </Card>
+            </Col>)}
 
-        <Modal title="Add tag image" visible={showImageModal} onOk={onPatchImage} onCancel={() => setImageShowModal(false)} confirmLoading={loading}>
-            <FileForm file={image} setFile={setImage} label={'Tag Image'} />
-        </Modal>
+            <Modal title="Add tag image" visible={showImageModal} onOk={onPatchImage} onCancel={() => setImageShowModal(false)} confirmLoading={loading}>
+                <FileForm file={image} setFile={setImage} label={'Tag Image'} />
+            </Modal>
 
-        <Modal title="Edit tag" visible={showEditModal} onOk={onPatchTag} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
-            <Form layout={'vertical'}>
-                <Form.Item label={'Name'}>
-                    <Input id="name" type="text" value={name} onChange={({target}) => setName(target.value)}/>
-                </Form.Item>
-                <Form.Item label={'Description'}>
-                    <TextArea id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
-                </Form.Item>
-            </Form>
-        </Modal>
-    </Row>;
+            <Modal title="Edit tag" visible={showEditModal} onOk={onPatchTag} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
+                <Form layout={'vertical'}>
+                    <Form.Item label={'Name'}>
+                        <Input id="name" type="text" value={name} onChange={({target}) => setName(target.value)}/>
+                    </Form.Item>
+                    <Form.Item label={'Description'}>
+                        <TextArea id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
+                    </Form.Item>
+                </Form>
+            </Modal>
+        </Row>
+    );
 }

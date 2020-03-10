@@ -2,6 +2,7 @@ import React, { ReactElement, useState, useMemo, useEffect } from 'react';
 import PageMenu from './components/PageMenu';
 import Head from 'next/head';
 import Layout from 'antd/lib/layout';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Drawer, Popconfirm, Divider, Table } from 'antd';
 import { News as NewsEntitiy } from '../@types/Entities/News';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,9 +28,9 @@ const columns = (onEdit: (news: NewsEntitiy) => void, onDelete: (id: number) => 
   title: '',
   key: 'actions',
   render: (text, record) => <ButtonGroup>
-  <Button icon='edit' onClick={() => onEdit(record)} />
+  <Button icon={<EditOutlined />} onClick={() => onEdit(record)} />
   <Popconfirm title="Sure to delete?" onConfirm={() => onDelete(record.id)} disabled={record.events > 0}>
-    <Button type="danger" icon='delete' disabled={record.events > 0} />
+    <Button type="danger" icon={<DeleteOutlined />} disabled={record.events > 0} />
   </Popconfirm>
 </ButtonGroup>,
 }];

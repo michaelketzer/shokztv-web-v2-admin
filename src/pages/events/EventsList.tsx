@@ -1,5 +1,15 @@
 import { ReactElement, useEffect, useState, useMemo } from "react";
-import { Table, Tag, Button, Popconfirm, Drawer, Form, Input, Select, DatePicker, Icon } from "antd";
+import {
+    CalendarOutlined,
+    DeleteOutlined,
+    EditOutlined,
+    PlusOutlined,
+    PushpinOutlined,
+    ThunderboltOutlined,
+} from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Table, Tag, Button, Popconfirm, Drawer, Input, Select, DatePicker } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { eventsSelector, eventLinkEntitiesSelector } from "../../store/selectors/event";
 import { loadEvents, changeMainEvent, toggleFeature, deleteEvent, patchEvent } from "../../store/Events";
@@ -56,13 +66,13 @@ const columns = (tags: TagEntities, organizer: OrganizerEntities, onEdit: (recor
     title: '',
     key: 'actions',
     render: (text, record) => <ButtonGroup>
-        <Button  type={record.isFeatured ? 'primary' : undefined} icon='pushpin' onClick={() => onChangeFeature(record.id, !record.isFeatured)} />
+        <Button  type={record.isFeatured ? 'primary' : undefined} icon={<PushpinOutlined />} onClick={() => onChangeFeature(record.id, !record.isFeatured)} />
         <Popconfirm title="Sure to change main event?" onConfirm={() => onChangeMainEvent(record.id)} okType={'danger'} disabled={record.isMainEvent}>
-            <Button type={record.isMainEvent ? 'primary' : undefined} icon='thunderbolt' />
+            <Button type={record.isMainEvent ? 'primary' : undefined} icon={<ThunderboltOutlined />} />
         </Popconfirm>
-        <Button icon='edit' onClick={() => onEdit(record)} />
+        <Button icon={<EditOutlined />} onClick={() => onEdit(record)} />
         <Popconfirm title="Sure to delete?" onConfirm={() => onDelete(record.id)} disabled={record.events > 0}>
-            <Button type="danger" icon='delete' disabled={record.events > 0} />
+            <Button type="danger" icon={<DeleteOutlined />} disabled={record.events > 0} />
         </Popconfirm>
     </ButtonGroup>,
     },
@@ -262,7 +272,7 @@ export default function EventsList(): ReactElement {
                     />)}
 
                 <Button type="dashed" style={{ width: '60%' }} onClick={() => setLinks([...links, {name: '', link: '', linkType: 'custom'}])}>
-                    <Icon type="plus" /> Add link
+                    <PlusOutlined /> Add link
                 </Button>
                 </Form.Item>
 
@@ -275,7 +285,7 @@ export default function EventsList(): ReactElement {
                 </Form.Item>
 
                 <Button type={'primary'} onClick={onPatch} loading={loading}>
-                    <Icon type="calendar" /> Event aktualisieren
+                    <CalendarOutlined /> Event aktualisieren
                 </Button>
             </Form>
         </Drawer>
