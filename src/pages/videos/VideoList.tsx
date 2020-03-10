@@ -1,8 +1,6 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useMemo } from "react";
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Row, Col, Card, Modal, Input, List } from "antd";
+import { Row, Col, Card, Modal, Input, Pagination, Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { loadVideos, deleteVideo, patchVideo } from "../../store/Video";
 import { videoSelector } from "../../store/selectors/video";
@@ -37,36 +35,32 @@ export default function VideoList(): ReactElement {
         setShowEditModal(false);
     };
 
-    return (
-        <Row type="flex" justify="start" gutter={[16, 16]}>
-            <List
-            itemLayout="horizontal"
-            size="large"
-            pagination={{
-                pageSize: 10,
-                position: 'top'
-            }}
-            dataSource={videos}
-            renderItem={(({id, title, thumbnail}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
-                    <Card
-                        actions={[
-                            <div onClick={() => onEdit(id, title)}><EditOutlined /> Edit</div>,
-                            <div onClick={() => dispatch(deleteVideo(id))}><DeleteOutlined /> Delete</div>,
-                        ]} 
-                        cover={<img alt={`video-${name}`} src={`${process.env.API_URL}${thumbnail}`} height={200} style={{objectFit: 'cover'}}/>}>
-                        <Card.Meta title={title} />
-                    </Card>
-                </Col>)}
-            />
+    const [page, setPage] = useState(1);
 
+    const filteredItems = useMemo(() => videos.slice(page * 10, page * 10 + 10), [page, videos]);
+
+    return (
+        <>
+            <Pagination current={page} onChange={(p) => setPage(p)} total={videos.length}/>
+
+            <Divider />
+
+            <Row justify="start" gutter={[16, 16]}>
+                {filteredItems.map(({id, title, thumbnail}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
+                        <Card
+                            actions={[
+                                <div onClick={() => onEdit(id, title)}><EditOutlined /> Edit</div>,
+                                <div onClick={() => dispatch(deleteVideo(id))}><DeleteOutlined /> Delete</div>,
+                            ]} 
+                            cover={<img alt={`video-${name}`} src={`${process.env.API_URL}${thumbnail}`} height={200} style={{objectFit: 'cover'}}/>}>
+                            <Card.Meta title={title} />
+                        </Card>
+                </Col>)}
+            </Row>
 
             <Modal title="Edit video" visible={showEditModal} onOk={onPatchVideo} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
-                <Form layout={'vertical'}>
-                    <Form.Item label={'Titel'}>
-                        <Input id="name" type="text" value={title} onChange={({target}) => setTitle(target.value)}/>
-                    </Form.Item>´
-                </Form>
+                <Input id="name" type="text" value={title} onChange={({target}) => setTitle(target.value)}/>
             </Modal>
-        </Row>
+        </>
     );
 }

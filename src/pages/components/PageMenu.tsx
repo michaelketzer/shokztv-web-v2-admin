@@ -1,47 +1,47 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Menu } from 'antd';
-import { ReactElement, useEffect, useMemo } from 'react';
+import { ReactElement } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import useRights from '../../store/rights';
+import { DashboardOutlined, LockOutlined, TagsOutlined, FileTextOutlined, VideoCameraOutlined, IdcardOutlined, ReadOutlined, CalendarOutlined } from '@ant-design/icons';
 
 const pages = [{
-    icon: 'dashboard',
+    icon: <DashboardOutlined />,
     name: 'Dashboard',
     path: '/dashboard',
     rights: ['ADMIN_ACCESS'],
 }, {
-    icon: 'lock',
+    icon: <LockOutlined />,
     name: 'Rollen & Rechte',
     path: '/rights',
     rights: ['ADMIN_ACCESS'],
 }, {
-    icon: 'tags',
+    icon: <TagsOutlined />,
     name: 'Tags',
     path: '/tags',
     rights: ['ARTICLE_CREATE', 'ARTICLE_EDIT', 'ARTICLE_DELETE', 'VIDEO_CREATE', 'VIDEO_EDIT', 'VIDEO_DELETE', 'EVENTS_CREATE', 'EVENT_EDIT', 'EVENT_DELETE'],
 }, {
-    icon: 'file-text',
+    icon: <FileTextOutlined />,
     name: 'Articles',
     path: '/articles',
     rights: ['ARTICLE_CREATE', 'ARTICLE_EDIT', 'ARTICLE_DELETE'],
 }, {
-    icon: 'video-camera',
+    icon: <VideoCameraOutlined />,
     name: 'Videos',
     path: '/videos',
     rights: ['VIDEO_CREATE', 'VIDEO_EDIT', 'VIDEO_DELETE'],
 }, {
-    icon: 'idcard',
+    icon: <IdcardOutlined />,
     name: 'Organizer',
     path: '/organizer',
     rights: ['ORGANIZER_CREATE', 'ORGANIZER_EDIT', 'ORGANIZER_DELETE'],
 }, {
-    icon: 'calendar',
+    icon: <CalendarOutlined />,
     name: 'Events',
     path: '/events',
     rights: ['EVENTS_CREATE', 'EVENT_EDIT', 'EVENT_DELETE'],
 }, {
-    icon: 'read',
+    icon: <ReadOutlined />,
     name: 'News',
     path: '/news',
     rights: ['NEWS_CREATE', 'NEWS_EDIT', 'NEWS_DELETE'],
@@ -56,7 +56,7 @@ export default function PageMenu(): ReactElement {
             {pages.filter(({rights}) => rightsCheck(rights)).map(({path, name, icon}) => <Menu.Item key={path}>
                 <Link href={path}>
                     <div>
-                        <LegacyIcon type={icon} />
+                        {icon}
                         {name}
                     </div>
                 </Link>

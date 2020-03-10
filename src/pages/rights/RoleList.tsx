@@ -15,7 +15,7 @@ export default function RoleList(): ReactElement {
     dispatch(loadRights());
   }, []);
   
-  return <Row type="flex" justify="start" gutter={[16, 16]}>
+  return <Row justify="start" gutter={[16, 16]}>
     {Object.values(roles).map((role) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={role.id}>
       <Card title={role.name}>
         <RoleCardContent role={role} />
