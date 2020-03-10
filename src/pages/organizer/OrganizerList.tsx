@@ -4,7 +4,6 @@ import { loadOrganizer, patchOrganizer, deleteOrganizer } from "../../store/Orga
 import { organizerSelector } from "../../store/selectors/organizer";
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Table, Button, Popconfirm, Modal, Input } from "antd";
 import ButtonGroup from "antd/lib/button/button-group";
 import FileForm from "../components/FileForm";

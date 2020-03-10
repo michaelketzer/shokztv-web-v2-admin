@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { List, Avatar } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { articlesSelector } from "../../store/selectors/article";
@@ -9,15 +8,7 @@ import { authorEntitiesSelector } from "../../store/selectors/author";
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import Paragraph from "antd/lib/typography/Paragraph";
-
-
-const IconText = ({ type, text }) => (
-    <span>
-      <LegacyIcon type={type} style={{ marginRight: 8 }} />
-      {text}
-    </span>
-  );
-
+import { EditFilled, GlobalOutlined } from "@ant-design/icons";
 
 export default function ArticleList(): ReactElement {
     const articles: Article[] = Object.values(useSelector(articlesSelector)).sort(({created: a}, {created: b}) => b - a);
@@ -36,18 +27,18 @@ export default function ArticleList(): ReactElement {
         itemLayout="vertical"
         size="large"
         pagination={{
+            position: 'both',
             pageSize: 3,
         }}
         dataSource={articles}
         renderItem={item => {
             const author = authorEntities[item.author];
-
             return <List.Item 
                 key={item.id}
                 extra={<img width={512} alt="logo" src={`${process.env.API_URL}${item.cover}`}/>}
                 actions={[
-                    <Link href={`/editArticle/${item.id}`}><div><IconText type="edit" text="Edit" key="edit" /></div></Link>,
-                    <div onClick={() => togglePublishStatus(item.id, item.status)}><IconText type="global" text={item.status !== 'published' ? 'Publish' : 'Unpublish'} key="list-vertical-like-o" /></div>,
+                    <Link href={`/editArticle/${item.id}`}><div><EditFilled />Editieren</div></Link>,
+                    <div onClick={() => togglePublishStatus(item.id, item.status)}><GlobalOutlined />{item.status !== 'published' ? 'Publish' : 'Unpublish'}</div>,
                 ]}
             >
                 <List.Item.Meta

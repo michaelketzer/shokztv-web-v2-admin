@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 import {storeReducer} from '../store/Store';
 import networkMiddleware from '../store/middleware/NetworkMiddleware';
 import 'antd/dist/antd.css';
+import '@ant-design/compatible/assets/index.css';
 
 const makeStore = () => {
     const composeEnhancers = composeWithDevTools({name: 'shokz.tv admin'});

@@ -15,7 +15,7 @@ export default function Tags(): ReactElement {
         </Head>
 
         <Header  style={{ height: '46px' }}><PageMenu /></Header>
-        <Content style={{ padding: '50px' }}>
+        <Content style={{ padding: '50px', overflowY: 'scroll' }}>
             <div>
                 <AddTag />
                 <Divider />

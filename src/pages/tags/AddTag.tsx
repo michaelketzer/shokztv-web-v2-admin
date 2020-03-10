@@ -25,7 +25,7 @@ export default function AddTag(): ReactElement {
       }
   }
 
-  return <Row type="flex" justify="start">
+  return <Row justify="start">
     <Button type="primary" onClick={() => setShowModal(true)}>
         Add Tag
     </Button>

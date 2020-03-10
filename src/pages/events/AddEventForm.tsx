@@ -1,13 +1,11 @@
 import React, { ReactElement, useState, useEffect, useMemo } from 'react';
 import { CalendarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input, Select, DatePicker, Button, Row, Col, Popconfirm } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { EventLink } from '../../@types/Entities/Event';
 import { loadOrganizer } from '../../store/Organizer';
 import { organizerSelector } from '../../store/selectors/organizer';
-import moment from 'moment';
 import { getCodeList } from 'country-list';
 import ReactCountryFlag from "react-country-flag"
 import TagsForm from '../components/TagsForm';
@@ -161,7 +159,8 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
 
             <Form.Item label={'Date'}>
                 <DatePicker.RangePicker 
-                    defaultValue={[start ? moment.unix(start) : null, end ? moment.unix(end) : null]}
+                    //@ts-ignore
+                    defaultValue={[start ? dayjs.unix(start) : null, end ? dayjs.unix(end) : null]}
                     format={dateFormat} 
                     onChange={(([startMoment, endMoment]) => {
                         setStart(startMoment ? startMoment.unix() : null);

@@ -1,7 +1,6 @@
 import React, { ReactElement, useState, useMemo, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input, Tag, AutoComplete } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../../store/selectors/tag';

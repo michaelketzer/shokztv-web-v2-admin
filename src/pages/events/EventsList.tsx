@@ -8,7 +8,6 @@ import {
     ThunderboltOutlined,
 } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Table, Tag, Button, Popconfirm, Drawer, Input, Select, DatePicker } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { eventsSelector, eventLinkEntitiesSelector } from "../../store/selectors/event";
@@ -23,7 +22,6 @@ import FileForm from "../components/FileForm";
 import { loadOrganizer, OrganizerEntities } from "../../store/Organizer";
 import { getCodeList } from 'country-list';
 import { organizerSelector } from "../../store/selectors/organizer";
-import moment from 'moment';
 import TagsForm from "../components/TagsForm";
 import { EditLink } from './AddEventForm';
 import TextEditor from "../components/TextEditor";
@@ -204,7 +202,8 @@ export default function EventsList(): ReactElement {
 
                 <Form.Item label={'Date'}>
                     <DatePicker.RangePicker 
-                        defaultValue={[start ? moment.unix(start) : null, end ? moment.unix(end) : null]}
+                        //@ts-ignore
+                        defaultValue={[start ? dayjs.unix(start) : null, end ? dayjs.unix(end) : null]}
                         format={dateFormat} 
                         onChange={(([startMoment, endMoment]) => {
                             setStart(startMoment ? startMoment.unix() : null);
