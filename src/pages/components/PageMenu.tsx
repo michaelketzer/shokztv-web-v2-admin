@@ -55,10 +55,7 @@ export default function PageMenu(): ReactElement {
         <Menu selectedKeys={[router.pathname]} mode="horizontal" theme={'dark'}>
             {pages.filter(({rights}) => rightsCheck(rights)).map(({path, name, icon}) => <Menu.Item key={path}>
                 <Link href={path}>
-                    <div>
-                        {icon}
-                        {name}
-                    </div>
+                    <div>{icon}&nbsp;{name}</div>
                 </Link>
             </Menu.Item>)}
       </Menu>
