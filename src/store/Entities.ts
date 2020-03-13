@@ -10,6 +10,7 @@ import {reducer as organizer} from './Organizer';
 import {reducer as event} from './Events';
 import {reducer as eventLinks} from './EventLinks';
 import {reducer as news} from './News';
+import {reducer as user} from './User';
 
 export const entityReducer = combiner({
     article: entitiesReducer(article, 'article'),
@@ -21,5 +22,6 @@ export const entityReducer = combiner({
     role: entitiesReducer(role, 'role'),
     right: entitiesReducer(right, 'right'),
     tag: entitiesReducer(tag, 'tag'),
+    user: entitiesReducer(user, 'user'),
     video: entitiesReducer(video, 'video')
 });

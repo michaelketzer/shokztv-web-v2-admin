@@ -11,6 +11,7 @@ import { OrganizerEntities } from "./Organizer";
 import { EventEntities } from "./Events";
 import { NewsEntities } from "./News";
 import { EventLinkEntities } from "./EventLinks";
+import { UserEntities } from "./User";
 
 export interface State {
     entities: {
@@ -23,6 +24,7 @@ export interface State {
         role: RoleEntities;
         right: RightEntities;
         tag: TagEntities;
+        user: UserEntities;
         video: VideoEntities;
     };
     ui: Ui;
