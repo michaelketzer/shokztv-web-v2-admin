@@ -37,7 +37,7 @@ export default function VideoList(): ReactElement {
 
     const [page, setPage] = useState(1);
 
-    const filteredItems = useMemo(() => videos.slice(page * 10, page * 10 + 10), [page, videos]);
+    const filteredItems = useMemo(() => videos.slice((page - 1) * 10, page * 10), [page, videos]);
 
     return (
         <>
