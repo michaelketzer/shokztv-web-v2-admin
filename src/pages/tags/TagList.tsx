@@ -21,7 +21,7 @@ export default function TagList(): ReactElement {
     const [id, setId] = useState<number | null>(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState<File | null>(null);
+    const [image, setImage] = useState<File | string | null>(null);
     const [loading, setLoading] = useState(false);
 
     const onAddImage = (id: number) => {
@@ -29,10 +29,11 @@ export default function TagList(): ReactElement {
         setImageShowModal(true);
     };
     
-    const onEdit = (id: number, name: string, description: string) => {
+    const onEdit = (id: number, name: string, description: string, image: string) => {
         setId(id);
         setName(name);
         setDescription(description);
+        setImage(image);
         setShowEditModal(true);
     };
 
@@ -50,7 +51,7 @@ export default function TagList(): ReactElement {
     const onPatchTag = async () => {
         if(name) {
             setLoading(true);
-            await dispatch(patchTag(id, name, description));
+            await dispatch(patchTag(id, name, description, image));
             setLoading(false);
         }
         setName('');
@@ -65,7 +66,7 @@ export default function TagList(): ReactElement {
                 <Card
                     actions={[
                         ...(!image ? [<div onClick={() => onAddImage(id)}><PictureOutlined /> Bild</div>] : []),
-                        <div onClick={() => onEdit(id, name, description)}><EditOutlined /> Editieren</div>,
+                        <div onClick={() => onEdit(id, name, description, image)}><EditOutlined /> Editieren</div>,
                         <div onClick={() => dispatch(deleteTag(id))}><DeleteOutlined /> Löschen</div>,
                     ]} 
                     cover={<img alt={`tag-${name}`} src={`${process.env.API_URL}${image}`} height={200} style={{objectFit: 'cover'}}/>}>
@@ -79,12 +80,9 @@ export default function TagList(): ReactElement {
 
             <Modal title="Tag bearbeiten" visible={showEditModal} onOk={onPatchTag} onCancel={() => setShowEditModal(false)} confirmLoading={loading}>
                 <Form layout={'vertical'}>
-                    <Form.Item label={'Name'}>
-                        <Input id="name" type="text" value={name} onChange={({target}) => setName(target.value)}/>
-                    </Form.Item>
-                    <Form.Item label={'Beschreibung'}>
-                        <TextArea id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
-                    </Form.Item>
+                    <Input id="name" placeholder={'Name'} type="text" value={name} onChange={({target}) => setName(target.value)}/>
+                    <TextArea placeholder={'Beschreibung'} id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
+                    <FileForm file={image} setFile={setImage} label={'Tag Bild'} />
                 </Form>
             </Modal>
         </Row>

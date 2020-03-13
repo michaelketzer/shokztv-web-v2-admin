@@ -75,14 +75,13 @@ export function createTag(name: string, description: string, file?: File): Actio
     }
 }
 
-export function patchTag(tagId: number, name: string = '', description: string = '', file?: File): ActionDispatcher<Promise<void>> {
+export function patchTag(tagId: number, name: string = '', description: string = '', file?: File | string | null): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
-        if(file) {
+        data.set('name', name);
+        data.set('description', description);
+        if(file instanceof File) {
             data.set('image', file);
-        } else {
-            data.set('name', name);
-            data.set('description', description);
         }
 
         await dispatch<Promise<Response>>({
