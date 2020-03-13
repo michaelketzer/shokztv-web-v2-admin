@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import useRights from '../../store/rights';
-import { DashboardOutlined, LockOutlined, TagsOutlined, FileTextOutlined, VideoCameraOutlined, IdcardOutlined, ReadOutlined, CalendarOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LockOutlined, TagsOutlined, FileTextOutlined, VideoCameraOutlined, IdcardOutlined, ReadOutlined, CalendarOutlined, UserOutlined } from '@ant-design/icons';
 
 const pages = [{
     icon: <DashboardOutlined />,
@@ -14,6 +14,11 @@ const pages = [{
     icon: <LockOutlined />,
     name: 'Rollen & Rechte',
     path: '/rights',
+    rights: ['ADMIN_ACCESS'],
+}, {
+    icon: <UserOutlined />,
+    name: 'User',
+    path: '/user',
     rights: ['ADMIN_ACCESS'],
 }, {
     icon: <TagsOutlined />,
