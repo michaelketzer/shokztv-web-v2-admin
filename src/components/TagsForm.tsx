@@ -45,7 +45,7 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
                 options={autoCompleteTags}
                 style={{ width: 300 }}
                 onSelect={(value) => setNewTagInput(value as string)} 
-                filterOption={(inputValue, option) => option.value.indexOf(inputValue) !== -1}>
+                filterOption={(inputValue, option) => option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1}>
                 <Input
                     type="text"
                     size="small"
