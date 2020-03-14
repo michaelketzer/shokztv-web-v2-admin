@@ -1,7 +1,6 @@
 import React, { ReactElement, useState, useEffect, useMemo } from 'react';
 import { CalendarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import { Input, Select, DatePicker, Button, Row, Col, Popconfirm } from 'antd';
+import { Form, Input, Select, DatePicker, Button, Row, Col, Popconfirm } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { EventLink } from '../../../@types/Entities/Event';
 import { loadOrganizer } from '../../../store/Organizer';
@@ -215,16 +214,17 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
             <TagsForm tags={tags} setTags={setTags} />
 
             <Form.Item label='Links'>
+                {/* //@ts-ignore */}
                 {links.map((link, index) => <EditLink 
-                key={index} 
-                del={() => setLinks(links.filter((dLink) => dLink.name !== link.name || dLink.linkType !== link.linkType || dLink.link !== link.link))} 
-                link={link} 
-                setLink={(linkData) => setLinks(links.map((oldLink, oldIndex) => {
-                    if(index === oldIndex) {
-                        return {...oldLink, ...linkData};
-                    }
-                    return oldLink;
-                }))}/>)}
+                    key={index} 
+                    del={() => setLinks(links.filter((dLink) => dLink.name !== link.name || dLink.linkType !== link.linkType || dLink.link !== link.link))} 
+                    link={link} 
+                    setLink={(linkData) => setLinks(links.map((oldLink, oldIndex) => {
+                        if(index === oldIndex) {
+                            return {...oldLink, ...linkData};
+                        }
+                        return oldLink;
+                    }))}/>)}
 
               <Button type="dashed" style={{ width: '60%' }} onClick={() => setLinks([...links, {name: '', link: '', linkType: 'custom'}])}>
                 <PlusOutlined /> Add link

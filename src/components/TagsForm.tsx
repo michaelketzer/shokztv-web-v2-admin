@@ -1,7 +1,6 @@
 import React, { ReactElement, useState, useMemo, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import { Input, Tag, AutoComplete } from 'antd';
+import { Form, Input, Tag, AutoComplete } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../store/selectors/tag';
 import { loadTags } from '../store/Tag';
@@ -17,7 +16,7 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
     const [newTagInput, setNewTagInput] = useState('');
     const availableTags = useSelector(tagsSelector);
     const autoCompleteTags = useMemo(() => 
-        [...(new Set(Object.values(availableTags).map((tag) => tag.name))).values()].filter((tag) => !tags.includes(tag)), 
+        [...(new Set(Object.values(availableTags).map((tag) => tag.name))).values()].filter((tag) => !tags.includes(tag)).map((tag) => ({value: tag})), 
         [availableTags, tags]
     );
 
@@ -36,17 +35,17 @@ export default function TagsForm({tags, setTags}: Props): ReactElement {
 
     return (
         <Form.Item label="Tags">
+            {/* //@ts-ignore */}
             {tags.map((tag) => <Tag key={tag} closable={true} onClose={() => removeTag(tag)}>
                 {tag.length > 40 ? `${tag.slice(0, 40)}...` : tag}
             </Tag>)}
 
             {tagInput && (
             <AutoComplete 
-                dataSource={autoCompleteTags}
+                options={autoCompleteTags}
                 style={{ width: 300 }}
-                size="small" 
                 onSelect={(value) => setNewTagInput(value as string)} 
-                filterOption={(inputValue, option) => (option.props.children as string).indexOf(inputValue) !== -1}>
+                filterOption={(inputValue, option) => option.value.indexOf(inputValue) !== -1}>
                 <Input
                     type="text"
                     size="small"

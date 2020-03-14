@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import AddArticleForm from '../../components/pages/addArticle/AddArticleForm';
+import AddArticleForm from '../../components/pages/article/AddArticleForm';
 import PageFrame from '../../components/PageFrame';
 
 export default function newArticle(): ReactElement {

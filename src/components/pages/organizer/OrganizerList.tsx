@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadOrganizer, patchOrganizer, deleteOrganizer } from "../../../store/Organizer";
 import { organizerSelector } from "../../../store/selectors/organizer";
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import { Table, Button, Popconfirm, Modal, Input } from "antd";
+import { Form, Table, Button, Popconfirm, Modal, Input } from "antd";
 import ButtonGroup from "antd/lib/button/button-group";
 import FileForm from "../../FileForm";
 
