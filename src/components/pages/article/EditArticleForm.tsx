@@ -7,6 +7,7 @@ import { loadTags } from '../../../store/Tag';
 import Router from 'next/router';
 import TagsForm from '../../TagsForm';
 import TextEditor from '../../TextEditor';
+import FileForm from '../../FileForm';
 
 const formItemLayout = {
     labelCol: {
@@ -37,6 +38,7 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
     const dispatch = useDispatch();
     const [title, setTitle] = useState(article.title);
     const [body, setBody] = useState(article.body);
+    const [image, setImage] = useState<File | string | null>(article.cover);
     const [tags, setTags] = useState<string[]>(article.tags.map((id) => tagEntities[id].name));
     const [loading, setLoading] = useState(false);
 
@@ -46,7 +48,7 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
 
     const save = async () => {
         setLoading(true);
-        await dispatch(patchArticle(article.id, title, tags, body));
+        await dispatch(patchArticle(article.id, title, tags, body, image));
         setLoading(false);
         Router.push('/articles');
     };
@@ -60,6 +62,10 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
 
         <Form.Item label="Body">
             <TextEditor text={body} setText={setBody} />
+        </Form.Item>
+
+        <Form.Item label="Cover Bild">
+            <FileForm file={image} setFile={setImage} label={'Cover'} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>

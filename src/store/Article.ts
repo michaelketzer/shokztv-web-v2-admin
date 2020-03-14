@@ -94,11 +94,12 @@ export function createArticle(title: string, tags: string[], body: string, cover
     }
 }
 
-export function patchArticle(articleId: number, title: string, tags: string[], body: string): ActionDispatcher<Promise<void>> {
+export function patchArticle(articleId: number, title: string, tags: string[], body: string, cover?: null | string | File ): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
         data.set('title', title);
         data.set('body', body);
+        cover instanceof File && data.set('cover', cover);
         tags.forEach((tag) => data.append('tags', tag));
         
         await dispatch<Promise<Response>>({
