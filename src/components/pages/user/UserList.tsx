@@ -1,11 +1,11 @@
 import { ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUsers, updateUserRole } from "../../store/User";
-import { userSelector } from "../../store/selectors/user";
+import { loadUsers, updateUserRole } from "../../../store/User";
+import { userSelector } from "../../../store/selectors/user";
 import { Table, Select } from "antd";
-import { loadRoles } from "../../store/Role";
-import { roleSelector } from "../../store/selectors/role";
-import { Role } from "../../@types/Entities/Role";
+import { loadRoles } from "../../../store/Role";
+import { roleSelector } from "../../../store/selectors/role";
+import { Role } from "../../../@types/Entities/Role";
 
 const { Option } = Select;
 

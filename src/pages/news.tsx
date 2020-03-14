@@ -1,16 +1,13 @@
 import React, { ReactElement, useState, useMemo, useEffect } from 'react';
-import PageMenu from './components/PageMenu';
-import Head from 'next/head';
-import Layout from 'antd/lib/layout';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Drawer, Popconfirm, Divider, Table } from 'antd';
 import { News as NewsEntitiy } from '../@types/Entities/News';
 import { useDispatch, useSelector } from 'react-redux';
 import { patchNews, createNews, deleteNews, loadNews } from '../store/News';
-import NewsForm from './news/NewsForm';
+import NewsForm from '../components/pages/news/NewsForm';
 import { newsSelector } from '../store/selectors/news';
 import ButtonGroup from 'antd/lib/button/button-group';
-const { Header, Content } = Layout;
+import PageFrame from '../components/PageFrame';
 
 const columns = (onEdit: (news: NewsEntitiy) => void, onDelete: (id: number) => void) => [{
   title: 'Headline',
@@ -66,33 +63,23 @@ export default function News(): ReactElement {
   };
   const onDelete = (id: number) => dispatch(deleteNews(id));
 
-  return <Layout className="layout" style={{ height: '100vh' }}>
-    <Head>
-      <title>News</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-
-    <Header  style={{ height: '46px' }}><PageMenu /></Header>
-    <Content style={{ padding: '50px', overflowY: 'scroll' }}>
-        <div>
-            <Button type="primary" onClick={() => setShowDrawer(true)}>
+  return <PageFrame title={'News'}>
+    <Button type="primary" onClick={() => setShowDrawer(true)}>
               Neue News
             </Button>
 
-            <Divider />
+    <Divider />
 
-            <Table dataSource={news} columns={columns(onEdit, onDelete)} rowKey={'id'}/>
+    <Table dataSource={news} columns={columns(onEdit, onDelete)} rowKey={'id'}/>
 
-            <Drawer
-              title={(id ? 'News bearbeiten' : 'Neue News')}
-              width={600}
-              onClose={() => setShowDrawer(false)}
-              visible={showDrawer}
-              bodyStyle={{ paddingBottom: 80 }}
-            >
-              <NewsForm data={data} setData={setData} loading={loading} save={update} />
-            </Drawer>
-        </div>
-    </Content>
-  </Layout>;
+    <Drawer
+      title={(id ? 'News bearbeiten' : 'Neue News')}
+      width={600}
+      onClose={() => setShowDrawer(false)}
+      visible={showDrawer}
+      bodyStyle={{ paddingBottom: 80 }}
+    >
+      <NewsForm data={data} setData={setData} loading={loading} save={update} />
+    </Drawer>
+  </PageFrame>;
 }

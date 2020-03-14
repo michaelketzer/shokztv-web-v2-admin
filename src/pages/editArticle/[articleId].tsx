@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect } from 'react';
-import PageMenu from '../components/PageMenu';
+import PageMenu from '../../PageMenu';
 import Head from 'next/head';
 import Layout from 'antd/lib/layout';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadArticles } from '../../store/Article';
-import { articlesSelector } from '../../store/selectors/article';
+import { loadArticles } from '../../../store/Article';
+import { articlesSelector } from '../../../store/selectors/article';
 import EditArticleForm from './EditArticleForm';
 import { useRouter } from 'next/router';
 const { Header, Content } = Layout;

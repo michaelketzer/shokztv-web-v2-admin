@@ -3,8 +3,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
 import { Input, Tag, AutoComplete } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { tagsSelector } from '../../store/selectors/tag';
-import { loadTags } from '../../store/Tag';
+import { tagsSelector } from '../store/selectors/tag';
+import { loadTags } from '../store/Tag';
 
 interface Props {
     tags: string[];

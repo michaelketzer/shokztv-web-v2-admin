@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadRoles } from '../../store/Role';
-import { loadRights } from '../../store/Right';
-import { roleSelector } from '../../store/selectors/role';
+import { loadRoles } from '../../../store/Role';
+import { loadRights } from '../../../store/Right';
+import { roleSelector } from '../../../store/selectors/role';
 import { Card, Col, Row } from 'antd';
 import RoleCardContent from './RoleCardContent';
 
