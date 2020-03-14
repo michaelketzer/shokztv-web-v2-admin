@@ -7,8 +7,7 @@ import {
     PushpinOutlined,
     ThunderboltOutlined,
 } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import { Table, Tag, Button, Popconfirm, Drawer, Input, Select, DatePicker } from "antd";
+import { Form, Table, Tag, Button, Popconfirm, Drawer, Input, Select, DatePicker } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { eventsSelector, eventLinkEntitiesSelector } from "../../../store/selectors/event";
 import { loadEvents, changeMainEvent, toggleFeature, deleteEvent, patchEvent } from "../../../store/Events";
@@ -258,6 +257,7 @@ export default function EventsList(): ReactElement {
                 <TagsForm tags={tags} setTags={setTags} />
 
                 <Form.Item label='Links'>
+                    {/*//@ts-ignore*/}
                     {links.map((link, index) => <EditLink 
                         key={index} 
                         link={link} 

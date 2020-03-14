@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadArticles } from '../../store/Article';
 import { articlesSelector } from '../../store/selectors/article';
-import EditArticleForm from '../../components/pages/editArticle/EditArticleForm';
+import EditArticleForm from '../../components/pages/article/EditArticleForm';
 import { useRouter } from 'next/router';
 import PageFrame from '../../components/PageFrame';
 

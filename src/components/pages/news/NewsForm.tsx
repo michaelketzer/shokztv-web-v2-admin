@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Form } from '@ant-design/compatible';
-import { Input, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { News } from '../../../@types/Entities/News';
 import TextArea from 'antd/lib/input/TextArea';
 

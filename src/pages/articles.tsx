@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Button, Divider, Drawer } from 'antd';
 import { useDispatch } from 'react-redux';
 import { loadArticles } from '../store/Article';
-import ArticleList from '../components/pages/articles/articleList';
-import AddArticleForm from '../components/pages/addArticle/AddArticleForm';
+import ArticleList from '../components/pages/article/articleList';
+import AddArticleForm from '../components/pages/article/AddArticleForm';
 import PageFrame from '../components/PageFrame';
 
 export default function Articles(): ReactElement {

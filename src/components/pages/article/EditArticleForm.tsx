@@ -1,6 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { Form } from '@ant-design/compatible';
-import { Input, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../../../store/selectors/tag';
 import { Article, patchArticle } from '../../../store/Article';

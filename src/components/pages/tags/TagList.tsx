@@ -1,7 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { DeleteOutlined, EditOutlined, PictureOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import { Row, Col, Card, Modal, Input } from "antd";
+import { Form, Row, Col, Card, Modal, Input } from "antd";
 import { loadTags, deleteTag, patchTag } from "../../../store/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { tagsSelector } from "../../../store/selectors/tag";
