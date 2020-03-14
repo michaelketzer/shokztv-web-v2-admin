@@ -11,10 +11,6 @@ export default function TextEditor({text, setText}: Props): ReactElement {
     return <CKEditor
         editor={ ClassicEditor }
         data={text}
-        onChange={ ( event, editor ) => {
-            const data = editor.getData();
-            setText(data);
-            console.log( { event, editor, data } );
-        } }
+        onChange={(event, editor) => setText(editor.getData())}
     />
 }
