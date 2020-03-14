@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
-import { ADD_ARTICLE_FAILURE, ADD_ARTICLE_SUCCESS, ADD_ARTICLE_REQUEST, LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS, LOAD_ARTICLES_FAILURE, PUBLISH_ARTICLE_FAILURE, PUBLISH_ARTICLE_SUCCESS, PUBLISH_ARTICLE_REQUEST, UNPUBLISH_ARTICLE_FAILURE, UNPUBLISH_ARTICLE_SUCCESS, UNPUBLISH_ARTICLE_REQUEST, UPDATE_ARTICLE_REQUEST, UPDATE_ARTICLE_SUCCESS, UPDATE_ARTICLE_FAILURE } from './Actions';
+import { ADD_ARTICLE_FAILURE, ADD_ARTICLE_SUCCESS, ADD_ARTICLE_REQUEST, LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS, LOAD_ARTICLES_FAILURE, PUBLISH_ARTICLE_FAILURE, PUBLISH_ARTICLE_SUCCESS, PUBLISH_ARTICLE_REQUEST, UNPUBLISH_ARTICLE_FAILURE, UNPUBLISH_ARTICLE_SUCCESS, UNPUBLISH_ARTICLE_REQUEST, UPDATE_ARTICLE_REQUEST, UPDATE_ARTICLE_SUCCESS, UPDATE_ARTICLE_FAILURE, DELETE_ARTICLE_FAILURE, DELETE_ARTICLE_SUCCESS, DELETE_ARTICLE_REQUEST } from './Actions';
 import { ActionDispatcher, CALL_API } from './middleware/NetworkMiddlewareTypes';
 import { getDefaultHeader } from './middleware/Network';
 import { loadTags, tag } from './Tag';
@@ -22,12 +22,27 @@ export interface Article {
     created: number;
 }
 
+interface DeleteArticleAction {
+    options: {
+        urlParams: {
+            articleId: number;
+        };
+    };
+    type: typeof DELETE_ARTICLE_SUCCESS;
+}
 
 export interface ArticleEntities {
     [x: number]: Article;
 };
 
-const {combinedReducer} = createReducer<ArticleEntities>({});
+const {addReducer, combinedReducer} = createReducer<ArticleEntities>({});
+
+addReducer<DeleteArticleAction>(DELETE_ARTICLE_SUCCESS, (state, {options: {urlParams: {articleId}}}) => {
+    const newState = {...state};
+    delete newState[articleId];
+    return newState;
+});
+
 export const reducer = combinedReducer;
 
 export function loadArticles(): ActionDispatcher<Promise<void>> {
@@ -155,5 +170,26 @@ export function unpublishArticle(articleId: number): ActionDispatcher<Promise<vo
         });
 
         await dispatch(loadArticles());
+    }
+}
+
+export function deleteArticle(articleId: number): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        await dispatch<Promise<Response>>({
+            [CALL_API]: {
+                endpoint: `${process.env.API_URL}/article/:articleId`,
+                method: 'del',
+                types: {
+                    requestType: DELETE_ARTICLE_REQUEST,
+                    successType: DELETE_ARTICLE_SUCCESS,
+                    failureType: DELETE_ARTICLE_FAILURE,
+                },
+                options: {
+                    urlParams: {
+                        articleId,
+                    } ,
+                },
+            },
+        });
     }
 }

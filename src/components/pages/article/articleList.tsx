@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { List, Avatar, Popconfirm } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { articlesSelector } from "../../../store/selectors/article";
-import { Article, publishArticle, unpublishArticle } from "../../../store/Article";
+import { Article, publishArticle, unpublishArticle, deleteArticle } from "../../../store/Article";
 import { AuthorEntities } from "../../../store/Author";
 import { authorEntitiesSelector } from "../../../store/selectors/author";
 import dayjs from 'dayjs';
@@ -25,7 +25,7 @@ export default function ArticleList(): ReactElement {
     };
 
     const onDelete = (articleId: number): void => {
-        console.log('Delete', articleId);
+        dispatch(deleteArticle(articleId));
     }
 
     const rightsCheck = useRights();
