@@ -11,6 +11,7 @@ import TagsForm from '../../TagsForm';
 import FileForm from '../../FileForm';
 import { createEvent } from '../../../store/Events';
 import TextEditor from '../../TextEditor';
+import dayjs from 'dayjs';
 
 const dateFormat = 'DD.MM.YYYY';
 
@@ -144,7 +145,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                     onChange={(value) => setOrganizer(value)} 
                     showSearch 
                     optionFilterProp={"children"} 
-                    filterOption={(input, option) => (option.props.children as string).toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                 >
                     {organizerOptions.map(({id, name}) => <Select.Option key={id} value={id}>
                         {name}
