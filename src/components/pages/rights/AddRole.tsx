@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Button, Modal, Input } from 'antd';
-import { addRole } from '../../store/Role';
+import { addRole } from '../../../store/Role';
 
 export default function AddRole(): ReactElement {
   const dispatch = useDispatch();

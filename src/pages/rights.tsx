@@ -1,28 +1,15 @@
 import React, { ReactElement } from 'react';
-import PageMenu from './components/PageMenu';
-import Head from 'next/head';
-import RoleList from './rights/RoleList';
-import Layout from 'antd/lib/layout';
-import AddRole from './rights/AddRole';
+import RoleList from '../components/pages/rights/RoleList';
+import AddRole from '../components/pages/rights/AddRole';
 import { Divider } from 'antd';
-const { Header, Content } = Layout;
+import PageFrame from '../components/PageFrame';
 
 export default function Rights(): ReactElement {
-  return <Layout className="layout" style={{ height: '100vh' }}>
-    <Head>
-      <title>Rollen & Rechte</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
+  return <PageFrame title={'Rollen & Rechte'}>
+    <RoleList />
 
-    <Header  style={{ height: '46px' }}><PageMenu /></Header>
-    <Content style={{ padding: '50px', overflowY: 'scroll' }}>
-      <div>
-        <RoleList />
-
-        <Divider />
-        
-        <AddRole/>
-      </div>
-    </Content>
-  </Layout>;
+    <Divider />
+    
+    <AddRole/>
+  </PageFrame>;
 }

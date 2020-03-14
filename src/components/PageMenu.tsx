@@ -2,7 +2,7 @@ import { Menu } from 'antd';
 import { ReactElement } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
-import useRights from '../../store/rights';
+import useRights from '../store/rights';
 import { DashboardOutlined, LockOutlined, TagsOutlined, FileTextOutlined, VideoCameraOutlined, IdcardOutlined, ReadOutlined, CalendarOutlined, UserOutlined } from '@ant-design/icons';
 
 const pages = [{

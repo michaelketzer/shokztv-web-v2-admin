@@ -7,7 +7,7 @@ import { EventLink } from '../../../@types/Entities/Event';
 import { loadOrganizer } from '../../../store/Organizer';
 import { organizerSelector } from '../../../store/selectors/organizer';
 import { getCodeList } from 'country-list';
-import ReactCountryFlag from "./node_modules/react-country-flag"
+import ReactCountryFlag from "react-country-flag"
 import TagsForm from '../../TagsForm';
 import FileForm from '../../FileForm';
 import { createEvent } from '../../../store/Events';

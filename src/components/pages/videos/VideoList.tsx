@@ -2,8 +2,8 @@ import { ReactElement, useEffect, useState, useMemo } from "react";
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Row, Col, Card, Modal, Input, Pagination, Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { loadVideos, deleteVideo, patchVideo } from "../../store/Video";
-import { videoSelector } from "../../store/selectors/video";
+import { loadVideos, deleteVideo, patchVideo } from "../../../store/Video";
+import { videoSelector } from "../../../store/selectors/video";
 
 export default function VideoList(): ReactElement {
     const dispatch = useDispatch();

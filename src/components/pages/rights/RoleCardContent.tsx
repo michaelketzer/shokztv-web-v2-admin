@@ -1,9 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { rightsSelector } from '../../store/selectors/right';
+import { rightsSelector } from '../../../store/selectors/right';
 import Checkbox from 'antd/lib/checkbox';
-import { Role } from '../../@types/Entities/Role';
-import { addRight, removeRight } from '../../store/Role';
+import { Role } from '../../../@types/Entities/Role';
+import { addRight, removeRight } from '../../../store/Role';
 
 export default function RoleCardContent({role}: {role: Role}): ReactElement {
   const dispatch = useDispatch();

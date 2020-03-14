@@ -1,12 +1,12 @@
 import React, { ReactElement, useState } from 'react';
 import { Form } from '@ant-design/compatible';
 import { Input, Button } from 'antd';
-import { createArticle } from '../../store/Article';
+import { createArticle } from '../../../store/Article';
 import Router from 'next/router';
-import TagsForm from '../components/TagsForm';
+import TagsForm from '../../TagsForm';
 import { useDispatch } from 'react-redux';
-import FileForm from '../components/FileForm';
-import TextEditor from '../components/TextEditor';
+import FileForm from '../../FileForm';
+import TextEditor from '../../TextEditor';
 
 const formItemLayout = {
     labelCol: {

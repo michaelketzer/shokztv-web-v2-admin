@@ -14,7 +14,7 @@ import { eventsSelector, eventLinkEntitiesSelector } from "../../../store/select
 import { loadEvents, changeMainEvent, toggleFeature, deleteEvent, patchEvent } from "../../../store/Events";
 import { Event, EventLink } from '../../../@types/Entities/Event';
 import dayjs from 'dayjs';
-import ReactCountryFlag from "./node_modules/react-country-flag"
+import ReactCountryFlag from "react-country-flag"
 import { TagEntities } from "../../../store/Tag";
 import { tagsSelector } from "../../../store/selectors/tag";
 import ButtonGroup from "antd/lib/button/button-group";
