@@ -12,6 +12,7 @@ import { EventEntities } from "./Events";
 import { NewsEntities } from "./News";
 import { EventLinkEntities } from "./EventLinks";
 import { UserEntities } from "./User";
+import { StreamerEntities } from "./Streamer";
 
 export interface State {
     entities: {
@@ -23,6 +24,7 @@ export interface State {
         news: NewsEntities;
         role: RoleEntities;
         right: RightEntities;
+        streamer: StreamerEntities;
         tag: TagEntities;
         user: UserEntities;
         video: VideoEntities;

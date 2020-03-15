@@ -3,23 +3,23 @@ import { ReactElement } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import useRights from '../store/rights';
-import { DashboardOutlined, LockOutlined, TagsOutlined, FileTextOutlined, VideoCameraOutlined, IdcardOutlined, ReadOutlined, CalendarOutlined, UserOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LockOutlined, TagsOutlined, FileTextOutlined, VideoCameraOutlined, IdcardOutlined, ReadOutlined, CalendarOutlined, UserOutlined, PlayCircleOutlined } from '@ant-design/icons';
 
 const pages = [{
     icon: <DashboardOutlined />,
     name: 'Dashboard',
     path: '/dashboard',
-    rights: ['ADMIN_ACCESS'],
+    rights: [],
 }, {
     icon: <LockOutlined />,
     name: 'Rollen & Rechte',
     path: '/rights',
-    rights: ['ADMIN_ACCESS'],
+    rights: [],
 }, {
     icon: <UserOutlined />,
     name: 'User',
     path: '/user',
-    rights: ['ADMIN_ACCESS'],
+    rights: [],
 }, {
     icon: <TagsOutlined />,
     name: 'Tags',
@@ -50,6 +50,11 @@ const pages = [{
     name: 'News',
     path: '/news',
     rights: ['NEWS_CREATE', 'NEWS_EDIT', 'NEWS_DELETE'],
+}, {
+    icon: <PlayCircleOutlined />,
+    name: 'Streamer',
+    path: '/streamer',
+    rights: ['STREAMER_CREATE', 'STREAMER_REMOVE'],
 }];
 
 export default function PageMenu(): ReactElement {
@@ -58,7 +63,7 @@ export default function PageMenu(): ReactElement {
     
     return (
         <Menu selectedKeys={[router.pathname]} mode="horizontal" theme={'dark'}>
-            {pages.filter(({rights}) => rightsCheck(rights)).map(({path, name, icon}) => <Menu.Item key={path}>
+            {pages.filter(({rights}) => rightsCheck(rights.concat('ADMIN_ACCESS'))).map(({path, name, icon}) => <Menu.Item key={path}>
                 <Link href={path}>
                     <div>{icon}&nbsp;{name}</div>
                 </Link>
