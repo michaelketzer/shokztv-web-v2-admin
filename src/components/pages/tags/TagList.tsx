@@ -19,6 +19,7 @@ export default function TagList(): ReactElement {
     const [showEditModal, setShowEditModal] = useState(false);
     const [id, setId] = useState<number | null>(null);
     const [name, setName] = useState('');
+    const [slug, setSlug] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState<File | string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ export default function TagList(): ReactElement {
     const onPatchImage = async () => {
         if(image) {
             setLoading(true);
-            await dispatch(patchTag(id, null, null, image));
+            await dispatch(patchTag(id, null, null, null, image));
             setLoading(false);
         }
         setImage(null);
@@ -50,7 +51,7 @@ export default function TagList(): ReactElement {
     const onPatchTag = async () => {
         if(name) {
             setLoading(true);
-            await dispatch(patchTag(id, name, description, image));
+            await dispatch(patchTag(id, name, description, slug, image));
             setLoading(false);
         }
         setName('');
@@ -81,6 +82,7 @@ export default function TagList(): ReactElement {
                 <Form layout={'vertical'}>
                     <Input id="name" placeholder={'Name'} type="text" value={name} onChange={({target}) => setName(target.value)}/>
                     <TextArea placeholder={'Beschreibung'} id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
+                    <Input id="slug" placeholder={'Slug'} type="text" value={slug} onChange={({target}) => setSlug(target.value)}/>
                     <FileForm file={image} setFile={setImage} label={'Tag Bild'} />
                 </Form>
             </Modal>

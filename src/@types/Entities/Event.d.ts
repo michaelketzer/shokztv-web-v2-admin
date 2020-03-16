@@ -29,4 +29,5 @@ export interface Event {
     organizerLogo: string;
     isFeatured: boolean;
     isMainEvent: boolean;
+    slug: string;
 }

@@ -46,11 +46,12 @@ export function loadTags(): ActionDispatcher<Promise<void>> {
     }
 }
 
-export function createTag(name: string, description: string, file?: File): ActionDispatcher<Promise<void>> {
+export function createTag(name: string, description: string, slug: string, file?: File): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
         data.set('name', name);
         data.set('description', description);
+        data.set('slug', slug);
         file && data.set('image', file);
         
         await dispatch<Promise<Response>>({
@@ -75,11 +76,12 @@ export function createTag(name: string, description: string, file?: File): Actio
     }
 }
 
-export function patchTag(tagId: number, name: string = '', description: string = '', file?: File | string | null): ActionDispatcher<Promise<void>> {
+export function patchTag(tagId: number, name: string = '', description: string = '', slug: string = '', file?: File | string | null): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
         data.set('name', name);
         data.set('description', description);
+        data.set('slug', slug);
         if(file instanceof File) {
             data.set('image', file);
         }

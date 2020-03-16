@@ -9,6 +9,7 @@ export default function AddTag(): ReactElement {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [tagName, setTagName] = useState('');
+  const [slug, setSlug] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -16,11 +17,12 @@ export default function AddTag(): ReactElement {
   const onCreate = async () => {
       if(tagName.length) {
         setLoading(true);
-        await dispatch(createTag(tagName, description, image));
+        await dispatch(createTag(tagName, description, slug, image));
         setLoading(false);
         setShowModal(false);
         setTagName('');
         setDescription('');
+        setSlug('')
         setImage(null);
       }
   }
@@ -45,6 +47,13 @@ export default function AddTag(): ReactElement {
         <div style={{margin: '10px 0'}} />
 
         <TextArea placeholder={'Beschreibung'} id="description" value={description} onChange={({target}) => setDescription(target.value)}/>
+
+        <div style={{margin: '10px 0'}} />
+
+        <Input placeholder="Slug" 
+                value={slug} 
+                disabled={loading}
+                onChange={(e) => setSlug(e.target.value)} />
 
         <div style={{margin: '10px 0'}} />
 

@@ -15,6 +15,7 @@ export interface Article {
     id: number;
     title: string;
     body: string;
+    slug: string;
     tags: number[];
     cover: string;
     status: string;
@@ -63,11 +64,12 @@ export function loadArticles(): ActionDispatcher<Promise<void>> {
     }
 }
 
-export function createArticle(title: string, tags: string[], body: string, cover?: File): ActionDispatcher<Promise<void>> {
+export function createArticle(title: string, tags: string[], body: string, slug: string, cover?: File): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
         data.set('title', title);
         data.set('body', body);
+        data.set('slug', slug);
         cover && data.set('cover', cover);
         tags.forEach((tag) => data.append('tags', tag));
         
@@ -94,11 +96,12 @@ export function createArticle(title: string, tags: string[], body: string, cover
     }
 }
 
-export function patchArticle(articleId: number, title: string, tags: string[], body: string, cover?: null | string | File ): ActionDispatcher<Promise<void>> {
+export function patchArticle(articleId: number, title: string, tags: string[], body: string, slug: string, cover?: null | string | File): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
         data.set('title', title);
         data.set('body', body);
+        data.set('slug', slug);
         cover instanceof File && data.set('cover', cover);
         tags.forEach((tag) => data.append('tags', tag));
         
