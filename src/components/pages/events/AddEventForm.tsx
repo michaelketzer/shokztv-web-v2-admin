@@ -86,6 +86,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
     const [description, setDescription] = useState('');
     const [descType, setDescType] = useState('description');
     const [disclaimer, setDisclaimer] = useState('');
+    const [slug, setSlug] = useState('');
     const [tags, setTags] = useState<string[]>([]);
     const [links, setLinks] = useState<Partial<EventLink>[]>([]);
     const [banner, setBanner] = useState<File | string | null>(null);
@@ -110,6 +111,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                 links,
                 banner instanceof File ? banner : null,
                 organizerLogo instanceof File ? organizerLogo : null,
+                slug,
             ));
             setLoading(false);
             setName('');
@@ -127,6 +129,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
             setLinks([]);
             setBanner(null);
             setOrganizerLogo(null);
+            setSlug('');
             closeCallback();
         };
     };
@@ -238,6 +241,10 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
 
             <Form.Item label="Veranstatler Logo">
                 <FileForm file={organizerLogo} setFile={setOrganizerLogo} />
+            </Form.Item>
+
+            <Form.Item label="Slug">
+                <Input style={{ width: '100%' }} value={slug} onChange={(e) => setSlug(e.target.value)} />
             </Form.Item>
 
             <Button type={'primary'} onClick={onCreate} loading={loading}>

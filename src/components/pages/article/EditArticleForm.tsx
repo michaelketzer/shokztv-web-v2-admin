@@ -38,6 +38,7 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
     const dispatch = useDispatch();
     const [title, setTitle] = useState(article.title);
     const [body, setBody] = useState(article.body);
+    const [slug, setSlug] = useState(article.slug);
     const [image, setImage] = useState<File | string | null>(article.cover);
     const [tags, setTags] = useState<string[]>(article.tags.map((id) => tagEntities[id].name));
     const [loading, setLoading] = useState(false);
@@ -48,7 +49,7 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
 
     const save = async () => {
         setLoading(true);
-        await dispatch(patchArticle(article.id, title, tags, body, image));
+        await dispatch(patchArticle(article.id, title, tags, body, slug, image));
         setLoading(false);
         Router.push('/articles');
     };
@@ -62,6 +63,10 @@ export default function EditArticleForm({article}: {article: Article}): ReactEle
 
         <Form.Item label="Body">
             <TextEditor text={body} setText={setBody} />
+        </Form.Item>
+
+        <Form.Item label="Slug">
+           <Input style={{ width: '100%' }} value={slug} onChange={(e) => setSlug(e.target.value)} />
         </Form.Item>
 
         <Form.Item label="Cover Bild">

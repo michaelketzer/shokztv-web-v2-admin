@@ -140,6 +140,7 @@ export default function EventsList(): ReactElement {
                 link: entity.link,
             }
         }));
+        setSlug(event.slug);
     };
 
     const onDelete = (id: number) => dispatch(deleteEvent(id));
@@ -161,6 +162,7 @@ export default function EventsList(): ReactElement {
     const [organizerLogo, setOrganizerLogo] = useState<File | string | null>(null);
     const [tags, setTags] = useState<string[]>([]);
     const [links, setLinks] = useState<Partial<EventLink>[]>([]);
+    const [slug, setSlug] = useState('');
 
     const onPatch = async (): Promise<void> => {
         setLoading(true);
@@ -180,7 +182,8 @@ export default function EventsList(): ReactElement {
             banner instanceof File ? banner : null,
             organizerLogo instanceof File ? organizerLogo : null,
             tags,
-            links
+            links,
+            slug
         ));
         setLoading(false);
         setShowEditModal(false);
@@ -302,6 +305,10 @@ export default function EventsList(): ReactElement {
 
                 <Form.Item label="Veranstalter Logo">
                     <FileForm file={organizerLogo} setFile={setOrganizerLogo} />
+                </Form.Item>
+
+                <Form.Item label="Slug">
+                    <Input style={{ width: '100%' }} value={slug} onChange={(e) => setSlug(e.target.value)} />
                 </Form.Item>
 
                 <Button type={'primary'} onClick={onPatch} loading={loading}>

@@ -87,7 +87,8 @@ export function createEvent(
     tags: string[],
     links: Partial<EventLink>[],
     banner?: File | null,
-    organizerLogo?: File | null
+    organizerLogo?: File | null,
+    slug?: string
 ): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
@@ -102,6 +103,7 @@ export function createEvent(
         data.set('descType', descType);
         data.set('description', description);
         data.set('disclaimer', disclaimer);
+        data.set('slug', slug);
         banner && data.set('banner', banner);
         organizerLogo && data.set('organizerLogo', organizerLogo);
         tags.forEach((tag) => data.append('tags', tag));
@@ -146,6 +148,7 @@ export function patchEvent(
     organizerLogo?: File | null,
     tags?: string[],
     links?: Partial<EventLink>[],
+    slug?: string
 ): ActionDispatcher<Promise<void>> {
     return async (dispatch) => {
         const data = new FormData();
@@ -161,6 +164,7 @@ export function patchEvent(
         description && data.set('description', description);
         disclaimer && data.set('disclaimer', disclaimer);
         banner && data.set('banner', banner);
+        slug && data.set('slug', slug);
         organizerLogo && data.set('organizerLogo', organizerLogo);
         //@ts-ignore
         tags.length > 0 ? tags.forEach((tag) => data.append('tags', tag)) : data.append('tags', []);

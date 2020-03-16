@@ -35,13 +35,14 @@ export default function AddArticleForm(): ReactElement {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const [slug, setSlug] = useState('');
     const [tags, setTags] = useState<string[]>([]);
     const [image, setImage] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
 
     const create = async () => {
         setLoading(true);
-        await dispatch(createArticle(title, tags, body, image));
+        await dispatch(createArticle(title, tags, body, slug, image));
         setLoading(false);
         Router.push('/articles');
     };
@@ -59,6 +60,10 @@ export default function AddArticleForm(): ReactElement {
 
         <Form.Item label="Cover Bild">
             <FileForm file={image} setFile={setImage} label={'Cover'} />
+        </Form.Item>
+
+        <Form.Item label="Slug">
+           <Input style={{ width: '100%' }} value={slug} onChange={(e) => setSlug(e.target.value)} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
