@@ -29,11 +29,12 @@ export default function TagList(): ReactElement {
         setImageShowModal(true);
     };
     
-    const onEdit = (id: number, name: string, description: string, image: string) => {
+    const onEdit = (id: number, name: string, description: string, slug: string, image: string) => {
         setId(id);
         setName(name);
         setDescription(description);
         setImage(image);
+        setSlug(slug);
         setShowEditModal(true);
     };
 
@@ -62,11 +63,11 @@ export default function TagList(): ReactElement {
 
     return (
         <Row justify="start" gutter={[16, 16]}>
-            {tags.map(({id, name, description, image}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
+            {tags.map(({id, name, description, image, slug}) => <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={4} key={id}>
                 <Card
                     actions={[
                         ...(!image ? [<div onClick={() => onAddImage(id)}><PictureOutlined /> Bild</div>] : []),
-                        <div onClick={() => onEdit(id, name, description, image)}><EditOutlined /> Editieren</div>,
+                        <div onClick={() => onEdit(id, name, description, slug, image)}><EditOutlined /> Editieren</div>,
                         <div onClick={() => dispatch(deleteTag(id))}><DeleteOutlined /> Löschen</div>,
                     ]} 
                     cover={<img alt={`tag-${name}`} src={`${process.env.API_URL}${image}`} height={200} style={{objectFit: 'cover'}}/>}>
