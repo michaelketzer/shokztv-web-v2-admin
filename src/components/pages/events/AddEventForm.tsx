@@ -148,7 +148,7 @@ export default function AddEventForm({closeCallback = () => {}}: Props): ReactEl
                     onChange={(value) => setOrganizer(value)} 
                     showSearch 
                     optionFilterProp={"children"} 
-                    filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    filterOption={(inputValue, option) => option.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                 >
                     {organizerOptions.map(({id, name}) => <Select.Option key={id} value={id}>
                         {name}

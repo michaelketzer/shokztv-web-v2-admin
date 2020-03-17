@@ -15,7 +15,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/moment": "^2.13.0",
     "@types/normalizr": "^2.0.18",
-    "antd": "4.0.2",
+    "antd": "4.0.3",
     "asmcrypto-lite": "^1.1.0",
     "country-list": "^2.2.0",
     "dayjs": "^1.8.19",
