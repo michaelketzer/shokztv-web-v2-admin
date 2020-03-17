@@ -211,7 +211,7 @@ export default function EventsList(): ReactElement {
                         onChange={(value) => setOrganizer(value)} 
                         showSearch 
                         optionFilterProp={"children"} 
-                        filterOption={(input, option) => (option.props.children as string).toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        filterOption={(inputValue, option) => option.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                     >
                         {organizerOptions.map(({id, name}) => <Select.Option key={id} value={id}>
                             {name}
@@ -242,7 +242,7 @@ export default function EventsList(): ReactElement {
                         onChange={(value) => setCountry(value)} 
                         showSearch 
                         optionFilterProp={"children"} 
-                        filterOption={(input, option) => (option.props.children[2] as string).toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                     >
                         {countryList.map(({code, name}) => <Select.Option key={code} value={code}>
                             {code === 'xx' ? <div className={'onlineFlag'} /> : <ReactCountryFlag countryCode={code} svg />}  {name}

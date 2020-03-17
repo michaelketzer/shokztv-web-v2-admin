@@ -48,6 +48,7 @@ export default function ArticleList(): ReactElement {
             } else {
                 rightsCheck(['ARTICLE_UNPUBLISH']) && actions.push(<div onClick={() => togglePublishStatus(item.id, item.status)}><GlobalOutlined />&nbsp;{'Veröffentlichung zurückziehen'}</div>);
             }
+            //@ts-ignore
             rightsCheck(['ARTICLE_DELETE']) &&  actions.push(<Popconfirm title="Sure to delete?" onConfirm={() => onDelete(item.id)}><DeleteOutlined />&nbsp;Löschen</Popconfirm>);
 
             return <List.Item 
