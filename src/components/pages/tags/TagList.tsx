@@ -46,6 +46,7 @@ export default function TagList(): ReactElement {
         }
         setImage(null);
         setId(null);
+        setSlug(null);
         setImageShowModal(false);
     };
 
@@ -57,6 +58,7 @@ export default function TagList(): ReactElement {
         }
         setName('');
         setDescription('');
+        setSlug('');
         setId(null);
         setShowEditModal(false);
     };
