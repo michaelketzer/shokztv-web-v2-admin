@@ -1,7 +1,7 @@
 import { createReducer } from "./Reducer/Reducer";
 import { schema } from "normalizr";
 import { ActionDispatcher, CALL_API } from "./middleware/NetworkMiddlewareTypes";
-import {LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, UPDATE_USER_ROLE_REQUEST, UPDATE_USER_ROLE_SUCCESS, UPDATE_USER_ROLE_FAILURE} from  './Actions';
+import {LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, UPDATE_USER_ROLE_REQUEST, UPDATE_USER_ROLE_SUCCESS, UPDATE_USER_ROLE_FAILURE, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE} from  './Actions';
 
 export const video = new schema.Entity('user');
 
@@ -56,6 +56,30 @@ export function updateUserRole(userId: number, roleId: number): ActionDispatcher
                     data: {
                         roleId
                     }
+                },
+            },
+        });
+
+        await dispatch(loadUsers());
+    }
+}
+
+export function updateUser(userId: number, data: Partial<User>): ActionDispatcher<Promise<void>> {
+    return async (dispatch) => {
+        await dispatch<Promise<Response>>({
+            [CALL_API]: {
+                endpoint: `${process.env.API_URL}/user/:userId`,
+                method: 'patch',
+                types: {
+                    requestType: UPDATE_USER_REQUEST,
+                    successType: UPDATE_USER_SUCCESS,
+                    failureType: UPDATE_USER_FAILURE,
+                },
+                options: {
+                    urlParams: {
+                        userId,
+                    },
+                    data
                 },
             },
         });
