@@ -18,10 +18,10 @@
     ],
     "build": {
         "env": {
-            "API_URL": "@prod-url"
+            "API_URL": "@staging-url"
         }
     },
     "env": {
-        "API_URL": "@prod-url"
+        "API_URL": "@staging-url"
     }
   }
