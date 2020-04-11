@@ -94,7 +94,7 @@ export function createEvent(
         const data = new FormData();
         data.set('name', name);
         data.set('organizer', ''+organizer);
-        data.set('shortDescription', shortDescription);
+        data.set('descriptionShort', shortDescription);
         data.set('start', ''+start);
         data.set('end', ''+end);
         data.set('country', country);
@@ -154,7 +154,7 @@ export function patchEvent(
         const data = new FormData();
         name && data.set('name', name);
         organizer && data.set('organizer', ''+organizer);
-        shortDescription && data.set('shortDescription', shortDescription);
+        shortDescription && data.set('descriptionShort', shortDescription);
         start && data.set('start', ''+start);
         end && data.set('end', ''+end);
         country && data.set('country', country);
