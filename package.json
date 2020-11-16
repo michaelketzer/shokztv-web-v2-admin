@@ -18,7 +18,7 @@
     "antd": "4.0.3",
     "asmcrypto-lite": "^1.1.0",
     "country-list": "^2.2.0",
-    "dayjs": "^1.8.19",
+    "dayjs": "^1.9.6",
     "dotenv": "^8.2.0",
     "is-plain-object": "^3.0.0",
     "isomorphic-unfetch": "^3.0.0",
