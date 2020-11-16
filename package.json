@@ -42,7 +42,7 @@
     "start": "next start"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.14.165",
     "@types/next-redux-wrapper": "^3.0.0",
     "@types/node": "^13.1.6",
     "@types/react-redux": "^7.1.5",
