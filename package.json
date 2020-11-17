@@ -7,7 +7,7 @@
   "author": "Michael Ketzer",
   "license": "MIT",
   "dependencies": {
-    "@ant-design/compatible": "^1.0.1",
+    "@ant-design/compatible": "^1.0.8",
     "@ant-design/icons": "^4.0.2",
     "@ckeditor/ckeditor5-build-classic": "^17.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
